@@ -14,7 +14,8 @@
                     <img src="{{asset('images')}}/kou-logo.png" alt="KOU Logo" width="256" height="256">
                 </div>
                 <div class="right-content-area w-auto md:w-1/2 flex flex-col items-center justify-center">
-                    <form class="w-3/4 m-0">
+                    <form class="w-3/4 m-0" action="{{route('loginPost')}}" method="POST">
+                        @csrf
                         <div class="mb-4">
                             <label class="block text-grey-darker text-sm mb-1" for="email">E-mail</label>
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none" id="email" type="email" placeholder="E-mail">
@@ -28,7 +29,7 @@
                             </div>
 
                         </div>
-                        <button class="w-full bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition" type="button">
+                        <button class="w-full bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition" type="submit">
                             Giriş Yap
                         </button>
                     </form>
