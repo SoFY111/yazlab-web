@@ -111,6 +111,9 @@
                             <a href="https://github.com/sponsors/taylorotwell" class="ml-1 underline">
                                 Sponsor
                             </a>
+
+                            <?php $loggedUserId = Session::get('firebaseUserId');?>
+                            <label class="ml-4">{{$loggedUserId}}</label>
                         </div>
                     </div>
 

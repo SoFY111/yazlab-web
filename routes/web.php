@@ -22,4 +22,4 @@ Route::get('/h', function (){
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('dashboard');

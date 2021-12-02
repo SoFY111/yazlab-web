@@ -59,8 +59,8 @@ class FirebaseController extends Controller
             Session::put('firebaseUserId', $signInResult->firebaseUserId());
             Session::put('idToken', $signInResult->idToken());
             Session::save();
-
             dd($signInResult);
+
         } catch (\Throwable $e) {
             switch ($e->getMessage()) {
                 case 'INVALID_PASSWORD':
