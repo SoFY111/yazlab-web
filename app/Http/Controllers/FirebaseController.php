@@ -59,7 +59,7 @@ class FirebaseController extends Controller
             Session::put('firebaseUserId', $signInResult->firebaseUserId());
             Session::put('idToken', $signInResult->idToken());
             Session::save();
-            dd($signInResult);
+            return redirect()->route('dashboard');
 
         } catch (\Throwable $e) {
             switch ($e->getMessage()) {
@@ -96,11 +96,12 @@ class FirebaseController extends Controller
 
         // $this->auth->revokeRefreshTokens("");
 
-        // if (Session::has('firebaseUserId') && Session::has('idToken')) {
-        //     dd("User masih login.");
-        // } else {
-        //     dd("User sudah logout.");
-        // }
+         if (Session::has('firebaseUserId') && Session::has('idToken')) {
+             $idToken =Session::get('idToken');
+//             dd("User masih login.");
+         } else {
+             dd("User sudah logout.");
+         }
 
         try {
             $verifiedIdToken = $this->auth->verifyIdToken($idToken, $checkIfRevoked = true);
