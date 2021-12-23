@@ -13,5 +13,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+
 firbase_credential.json
-configFirebase.json
+firebaseAdminCred.json

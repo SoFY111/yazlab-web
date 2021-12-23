@@ -16,8 +16,9 @@ class FirebaseController extends Controller
     public function __construct()
     {
         $factory = (new Factory)
-            ->withServiceAccount(__DIR__.'/configFirebase.json')
+            ->withServiceAccount(base_path().'\firebaseAdminCred.json')
             ->withDatabaseUri('https://yazlab-proje-687f5.appspot.com/');
+            //->withServiceAccount(__DIR__.'\configFirebase.json')
             //->withDatabaseUri('https://YOUR-FIREBASE-PROJECT.firebaseio.com/');
 
         $this->auth = $factory->createAuth();

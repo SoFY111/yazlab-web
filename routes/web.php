@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\FirebaseController;
+use App\Http\Controllers\AppealControllers\DoubleMajorAppealController;
 
 Route::group(['middleware' => 'isLogin'], function (){
 
@@ -20,8 +21,11 @@ Route::group(['middleware' => 'isLogin'], function (){
 Route::group(['middleware' => 'isLogged'], function (){
 
     Route::get('/user-check', [FirebaseController::class, 'userCheck'])->name('userCheck');
+    Route::get('/cikis-yap', [FirebaseController::class, 'signOut'])->name('signOut');
 
     Route::get('/', function () {
         return view('ornk');
     })->name('dashboard');
+
+    Route::get('capbasvuru', [DoubleMajorAppealController::class, 'index'])->name('doubleMajorAppeal');
 });
