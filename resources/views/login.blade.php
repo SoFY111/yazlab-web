@@ -14,15 +14,22 @@
                     <img src="{{asset('images')}}/kou-logo.png" alt="KOU Logo" width="256" height="256">
                 </div>
                 <div class="right-content-area w-auto md:w-1/2 flex flex-col items-center justify-center">
+                    @if($errors->any())
+                        <div class="danger w-3/4 py-2 pl-2 mb-2 font-light text-red-900 bg-red-200 border border-red-300 rounded-md danger">
+                            @foreach($errors->all() as $error )
+                                {{$error}}
+                            @endforeach
+                        </div>
+                    @endif
                     <form class="w-3/4 m-0" action="{{route('loginPost')}}" method="POST">
                         @csrf
                         <div class="mb-4">
                             <label class="block text-grey-darker text-sm mb-1" for="email">E-mail</label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none" id="email" type="email" placeholder="E-mail">
+                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none" id="email" name="email" type="email" placeholder="E-mail">
                         </div>
                         <div class="mb-6">
                             <label class="block text-grey-darker text-sm mb-1" for="password">Şifre</label>
-                            <input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-1 outline-none" id="password" type="password" placeholder="******************">
+                            <input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-1 outline-none" id="password" name="password" type="password" placeholder="******************">
                             <div class="flex flex-row items-center justify-between">
                                 <p class="text-red-500 text-xs italic opacity-0">Please choose a password.</p>
                                 <a class="inline-block align-baseline text-sm text-blue hover:text-blue-darker" href="#">Şifremi Unuttum</a>

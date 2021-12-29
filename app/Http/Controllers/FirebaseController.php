@@ -9,6 +9,7 @@ use Kreait\Firebase\Auth;
 use Firebase\Auth\Token\Exception\InvalidToken;
 use Kreait\Firebase\Exception\Auth\RevokedIdToken;
 
+
 class FirebaseController extends Controller
 {
     protected $auth, $database;
@@ -48,10 +49,16 @@ class FirebaseController extends Controller
         }
     }
 
-    public function signIn()
+    public function signIn(Request $request)
     {
-        $email = "hakan.dincturkk@gmail.com";
-        $pass = "123456";
+
+        $request->validate([
+           'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        $email = $request->post('email');
+        $pass = $request->post('password');
 
         try {
             $signInResult = $this->auth->signInWithEmailAndPassword($email, $pass);
@@ -65,7 +72,7 @@ class FirebaseController extends Controller
         } catch (\Throwable $e) {
             switch ($e->getMessage()) {
                 case 'INVALID_PASSWORD':
-                    dd("Hatalı Şifre");
+                    return redirect()->route('login')->withErrors('Hatalı şifre veya E-posta..');
                     break;
                 case 'EMAIL_NOT_FOUND':
                     dd("Email Hatalı.");
@@ -80,14 +87,13 @@ class FirebaseController extends Controller
     public function signOut()
     {
         if (Session::has('firebaseUserId') && Session::has('idToken')) {
-            // dd("User masih login.");
             $this->auth->revokeRefreshTokens(Session::get('firebaseUserId'));
             Session::forget('firebaseUserId');
             Session::forget('idToken');
             Session::save();
-            dd("User berhasil logout.");
+            return redirect()->route('login');
         } else {
-            dd("User belum login.");
+            return redirect()->route('login');
         }
     }
 

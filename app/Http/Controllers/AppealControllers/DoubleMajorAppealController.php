@@ -33,12 +33,8 @@ class DoubleMajorAppealController extends Controller
             $docRef = $this->database->collection('users')->document($currentUserId);
             $snapshot = $docRef->snapshot();
             if ($snapshot->exists()) {
-
-                $profilePhoto = $this->storage->bucket('yazlab-proje-687f5.appspot.com/images/userProfilePicture/'.$snapshot->data()['profilePhoto'])->exists();
-                //$profilePhoto = $this->storage->bucket('/images/userProfilePicture/'.$snapshot->data()['profilePhoto']);
-                print_r($profilePhoto);
-                dd($snapshot->data());
-
+                $expiresAt = new \DateTime('tomorrow');
+                $profilePhoto = app('firebase.storage')->getBucket()->object('images/userProfilePicture/'.$snapshot->data()['profilePhoto'])->signedUrl($expiresAt);
             } else {
                 printf('Veri Tabanı Hatası..');
             }

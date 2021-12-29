@@ -21,7 +21,7 @@ Route::group(['middleware' => 'isLogin'], function (){
 Route::group(['middleware' => 'isLogged'], function (){
 
     Route::get('/user-check', [FirebaseController::class, 'userCheck'])->name('userCheck');
-    Route::get('/cikis-yap', [FirebaseController::class, 'signOut'])->name('signOut');
+    Route::get('/cikis-yap', [FirebaseController::class, 'signOut'])->name('logOut');
 
     Route::get('/', function () {
         return view('ornk');

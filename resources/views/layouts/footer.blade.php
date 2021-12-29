@@ -1,5 +1,5 @@
     <!-- Footer -->
-        <footer class="sticky-footer bg-white">
+        <footer class="sticky-footer bg-whitesmoke">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
                     <span>Copyright &copy; {{config('global.siteTitle')}} {{date('Y')}}</span>

@@ -19,6 +19,7 @@ class ProfileData extends Component
     protected $database;
     protected $storage;
     public $userName;
+    public $profilePhoto;
 
     public function __construct(Firestore $firestore, Storage $storage)
     {
@@ -38,12 +39,13 @@ class ProfileData extends Component
             $docRef = $this->database->collection('users')->document($currentUserId);
             $snapshot = $docRef->snapshot();
             if ($snapshot->exists()) {
+                $expiresAt = new \DateTime('tomorrow');
                 $this->userName = $snapshot->data()['name'];
+                $this->profilePhoto = app('firebase.storage')->getBucket()->object('images/userProfilePicture/'.$snapshot->data()['profilePhoto'])->signedUrl($expiresAt);
             } else {
                 printf('Veri Tabanı Hatası..');
             }
         }
-
         return view('components.profile-data');
     }
 }
