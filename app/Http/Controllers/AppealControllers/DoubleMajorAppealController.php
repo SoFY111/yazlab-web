@@ -104,6 +104,69 @@ class DoubleMajorAppealController extends Controller
         //
     }
 
+    public function uploadFile(Request $request){
+        if ($request->hasFile('file')){
+            $this->currentUserId = Session::get('firebaseUserId');
+            $userRef = $this->database->collection('users')->document($this->currentUserId)->snapshot();
+
+            $studentNumber = $userRef['studentNumber'];
+            $userName = str_replace(' ', '-', $userRef['name']);
+
+            $fileName = $studentNumber.'_'.$userName.'_'.date_timestamp_get(date_create()).'_'.$request->appealUUID.'_'.$request->fileType.'.'.$request->file->extension();
+
+            if ($request->file->extension() == 'png' || $request->file->extension() == 'jpg' || $request->file->extension() == 'jpeg') $filePath = "images";
+            else if ($request->file->extension() == 'pdf') $filePath = "pdf";
+            else $filePath = "documents";
+
+            $this->database->collection('users')
+                ->document($this->currentUserId)
+                ->collection('appeals')
+                ->document(request()->appealUUID)
+                ->set([
+                    'files'=>[
+                        $request->fileType=> $fileName
+                    ]
+                ], ['merge' => true]);
+
+            $file = fopen($request->file, 'r');
+            $bucket = $this->storage->bucket('yazlab-proje-687f5.appspot.com');
+            $bucket->upload($file, [
+                'name' => $filePath.'/'.request()->appealUUID.'/'.$fileName
+            ]);
+            return json_encode($fileName);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param string $fileName
+     *
+     */
+    public function deleteFile($fileName, $fileType)
+    {
+        $this->currentUserId = Session::get('firebaseUserId');
+
+        $appealUUID = explode('_', $fileName);
+        $fileExt = explode('.', $appealUUID[4])[1];
+        $this->database->collection('users')
+            ->document($this->currentUserId)
+            ->collection('appeals')
+            ->document($appealUUID[3])
+            ->set([
+               'files'=>[
+                   $fileType => null,
+                ],
+            ], ['merge' => true]);
+
+        if ($fileExt == 'png' || $fileExt == 'jpg' || $fileExt == 'jpeg') $filePath = "images";
+        else if ($fileExt == 'pdf') $filePath = "pdf";
+        else $filePath = "documents";
+
+        app('firebase.storage')->getBucket()->object($filePath.'/'.$appealUUID[3].'/'.$fileName)->delete();
+        return json_encode(['msg'=>'silindi']);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

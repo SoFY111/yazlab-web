@@ -28,4 +28,6 @@ Route::group(['middleware' => 'isLogged'], function (){
     })->name('dashboard');
 
     Route::get('capbasvuru', [DoubleMajorAppealController::class, 'index'])->name('doubleMajorAppeal');
+    Route::get('cap-delete-file/{fileName}/{fileType}', [DoubleMajorAppealController::class, 'deleteFile'])->name('doubleMajorAppealDeleteFile');
+    Route::post('upload-file', [DoubleMajorAppealController::class, 'uploadFile'])->name('doubleMajorAppealUploadFile');
 });
