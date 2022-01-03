@@ -1,6 +1,6 @@
 @extends('layouts.master')
-@section('title') ÇAP Başvuru @endsection
-@section('headerTitle') ÇAP Başvuru  @endsection
+@section('title') Yaz Okulu Başvuru @endsection
+@section('headerTitle') Yaz Okulu Başvuru @endsection
 @section('content')
     <div class="container">
         <div class="flex flex-col justify-center items-center">
@@ -58,19 +58,6 @@
                     <button type="submit" id="fileQUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
             </form>
-
-            <!-- fileF -->
-            <form class="w-2/3 m-0 p-4 flex flex-row items-center" id="fileFForm">
-                <div class="flex-grow flex flex-col" id="fileFInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">FileF</label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
-                           id="fileF" name="fileF" type="file" placeholder="Öğrenci No">
-                </div>
-                <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">fileF</label>
-                    <button type="reset" id="fileFResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
-                    <button type="submit" id="fileFUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
-                </div>
             </form>
             <div class="w-2/3 pl-4 flex flex-col justify-start">
                 <div class="flex flex-row items-center">
@@ -83,12 +70,86 @@
             </div>
         </div>
     </div>
+
+    {{$data->appealUUID}}
+    @if($data->firstOpening === 1)
+        <div
+            class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+            id="my-modal"
+        ></div>
+
+        <div
+            class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+            style="position:absolute; top: 50%; right: 50%; transform: translate(50%,-50%);" id="modalCloseButton">
+            <div class="mt-3 text-center">
+                <div
+                    class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100"
+                >
+                    <i class="fa-solid fa-book text-green-600" style="font-size: 20px"></i>
+                </div>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Yaz Okulu Başvuru Sayfasına <br/>Hoş Geldiniz!</h3>
+                <div class="mt-2 px-7 py-3">
+                        <ul class="text-sm text-gray-500">
+                            <li>DGS Yerleştirme Sonuç Belgesi</li>
+                            <li>Önlisans Transkript</li>
+                            <li>Ders İçerikleri</li>
+                            <li>Ders Planı Müfredatı</li>
+                            <li>Mezuniyet Belgesi</li>
+                        </ul>
+                    <p class="text-sm text-gray-800 mt-3">Başvuru yapmak için bu belgeleri yüklemeniz gerekmeketedir.</p>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <a href="{{route('dashboard')}}">
+                        <button  class="px-4 py-2 mb-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
+                            Vazgeç
+                        </button>
+                    </a>
+                    <button
+                        id="ok-btn"
+                        class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+
 @endsection
 
 
 @section('js')
     <script>
+
+        let modal = document.getElementById("my-modal");
+        $('#my-modal').css('display', 'block');
+        let btn = document.getElementById("open-btn");
+
+        let button = document.getElementById("ok-btn");
+        $('#ok-btn').click(function() {
+            $('#my-modal').css('display', 'none');
+            $('#modalCloseButton').css('display', 'none');
+        })
+
         $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                }
+            });
+            $('#ok-btn').click(() => {
+                $.ajax({
+                    type:'post',
+                    url: '{{route('appealOpeningChange')}}',
+                    data: {appealUUID: "{{$data->appealUUID}}"},
+                    dataType: 'json',
+                    success:function(res){
+
+                    },
+                    error:function (res){
+                        console.log('basarisiz');
+                    }
+                })
+            });
 
             $('#fileX').attr('hidden', true)
             $('#fileY').attr('hidden', true)
@@ -103,8 +164,6 @@
             $('#fileZUploadButton').attr('disabled', true)
             $('#fileQResetButton').attr('disabled', true)
             $('#fileQUploadButton').attr('disabled', true)
-            $('#fileFResetButton').attr('disabled', true)
-            $('#fileFUploadButton').attr('disabled', true)
 
             @if(isset($data))
                 @if(isset($data->files['fileX']))
@@ -131,12 +190,6 @@
                 @else
                     $('#fileQ').attr('hidden', false);
                 @endif
-                @if(isset($data->files['fileF']))
-                    $('#fileFInputDiv').append('<label class="w-full shadow appearance-none border rounded py-2 px-3 text-grey-darker outline-none" id="fileYInputDivLabel">{{substr($data->files['fileF'], 0, 60)}}...</label>');
-                    $('#fileFResetButton').attr('disabled', false)
-                @else
-                    $('#fileF').attr('hidden', false);
-                @endif
             @endif
             console.log( "ready!" );
 
@@ -160,27 +213,22 @@
                 $('#fileXUploadButton').attr('disabled', true)
 
                 @if(isset($data->files['fileX']))
-                    $('#fileXInputDivLabel').remove();
-                    $('#fileX').attr('hidden', false);
-                    $.ajax({
-                        type:'get',
-                        url: '{{route('doubleMajorAppealDeleteFile', [$data->files['fileX'], 'fileX'])}}',
-                        dataType: 'json',
-                        success:function(res){
-                            console.log(res);
-                            console.log('silindi');
-                        },
-                        error:function (res){
-                            console.log('silinmedi');
-                        }
-                    })
+                $('#fileXInputDivLabel').remove();
+                $('#fileX').attr('hidden', false);
+                $.ajax({
+                    type:'get',
+                    url: '{{route('doubleMajorAppealDeleteFile', [$data->files['fileX'], 'fileX'])}}',
+                    dataType: 'json',
+                    success:function(res){
+                        console.log(res);
+                        console.log('silindi');
+                    },
+                    error:function (res){
+                        console.log('silinmedi');
+                    }
+                })
                 @endif
             })
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                }
-            });
             $('#fileXForm').submit((e) => {
                 e.preventDefault();
                 console.log($('#fileX').val())
@@ -246,21 +294,21 @@
                 $('#fileYUploadButton').attr('disabled', true)
 
                 @if(isset($data->files['fileY']))
-                    $('#fileYInputDivLabel').remove();
-                    $('#fileY').attr('hidden', false);
+                $('#fileYInputDivLabel').remove();
+                $('#fileY').attr('hidden', false);
 
-                    $.ajax({
-                        type:'get',
-                        url: '{{route('doubleMajorAppealDeleteFile', [$data->files['fileY'], 'fileY'])}}',
-                        dataType: 'json',
-                        success:function(res){
-                            console.log(res);
-                            console.log('silindi');
-                        },
-                        error:function (res){
-                            console.log('silinmedi');
-                        }
-                    })
+                $.ajax({
+                    type:'get',
+                    url: '{{route('doubleMajorAppealDeleteFile', [$data->files['fileY'], 'fileY'])}}',
+                    dataType: 'json',
+                    success:function(res){
+                        console.log(res);
+                        console.log('silindi');
+                    },
+                    error:function (res){
+                        console.log('silinmedi');
+                    }
+                })
                 @endif
             })
 
@@ -327,21 +375,21 @@
                 $('#fileZUploadButton').attr('disabled', true)
 
                 @if(isset($data->files['fileZ']))
-                    $('#fileZInputDivLabel').remove();
-                    $('#fileZ').attr('hidden', false);
+                $('#fileZInputDivLabel').remove();
+                $('#fileZ').attr('hidden', false);
 
-                    $.ajax({
-                        type:'get',
-                        url: '{{route('doubleMajorAppealDeleteFile', [$data->files['fileZ'], 'fileZ'])}}',
-                        dataType: 'json',
-                        success:function(res){
-                            console.log(res);
-                            console.log('silindi');
-                        },
-                        error:function (res){
-                            console.log('silinmedi');
-                        }
-                    })
+                $.ajax({
+                    type:'get',
+                    url: '{{route('doubleMajorAppealDeleteFile', [$data->files['fileZ'], 'fileZ'])}}',
+                    dataType: 'json',
+                    success:function(res){
+                        console.log(res);
+                        console.log('silindi');
+                    },
+                    error:function (res){
+                        console.log('silinmedi');
+                    }
+                })
                 @endif
             })
 
@@ -408,21 +456,21 @@
                 $('#fileQUploadButton').attr('disabled', true)
 
                 @if(isset($data->files['fileQ']))
-                    $('#fileQInputDivLabel').remove();
-                    $('#fileQ').attr('hidden', false);
+                $('#fileQInputDivLabel').remove();
+                $('#fileQ').attr('hidden', false);
 
-                    $.ajax({
-                        type:'get',
-                        url: '{{route('doubleMajorAppealDeleteFile', [$data->files['fileQ'], 'fileQ'])}}',
-                        dataType: 'json',
-                        success:function(res){
-                            console.log(res);
-                            console.log('silindi');
-                        },
-                        error:function (res){
-                            console.log('silinmedi');
-                        }
-                    })
+                $.ajax({
+                    type:'get',
+                    url: '{{route('doubleMajorAppealDeleteFile', [$data->files['fileQ'], 'fileQ'])}}',
+                    dataType: 'json',
+                    success:function(res){
+                        console.log(res);
+                        console.log('silindi');
+                    },
+                    error:function (res){
+                        console.log('silinmedi');
+                    }
+                })
                 @endif
             })
 
@@ -460,86 +508,6 @@
                         $('#fileQInputDiv').append('<label class="w-full shadow appearance-none border rounded py-2 px-3 text-grey-darker outline-none" id="fileQInputDivLabel">' + res.substr(1, 60) + '...</label>');
                         $('#fileQResetButton').attr('disabled', false)
                         $('#fileQUploadButton').attr('disabled', true)
-                        $('#indicator').addClass('hidden');
-                    },
-                    error:function (res){
-                        console.log('yüklenmedi');
-                    }
-                })
-
-            })
-            //ENDOF fileQ
-            //fileF
-            $('#fileF').change(function(e) {
-                let fileName = this.files[0].name;
-                let isUpload = this.files.length;
-                console.log('The fileF name is : "' + fileName);
-                console.log(this.files.length);
-
-                if(isUpload > 0) $('#fileFResetButton').attr('disabled', false);
-                else $('#fileFResetButton').attr('disabled', true);
-                if(isUpload > 0) $('#fileFUploadButton').attr('disabled', false);
-                else $('#fileFUploadButton').attr('disabled', true)
-            });
-
-            $('#fileFResetButton').on('click', function() {
-                $('#fileF').val("")
-                $('#fileFResetButton').attr('disabled', true)
-                $('#fileFUploadButton').attr('disabled', true)
-
-                @if(isset($data->files['fileF']))
-                    $('#fileFInputDivLabel').remove();
-                    $('#fileF').attr('hidden', false);
-
-                    $.ajax({
-                        type:'get',
-                        url: '{{route('doubleMajorAppealDeleteFile', [$data->files['fileF'], 'fileF'])}}',
-                        dataType: 'json',
-                        success:function(res){
-                            console.log(res);
-                            console.log('silindi');
-                        },
-                        error:function (res){
-                            console.log('silinmedi');
-                        }
-                    })
-                @endif
-            })
-
-            $('#fileFForm').submit((e) => {
-                e.preventDefault();
-                console.log($('#fileF').val())
-
-                let formData = new FormData();
-                let file = $('#fileF')[0].files[0];
-                formData.append('file', file);
-                formData.append('fileType', 'fileF');
-                formData.append('appealUUID', '{{$data->appealUUID}}');
-                $.ajax({
-                    type:'POST',
-                    url: '{{route('doubleMajorAppealUploadFile')}}',
-                    data: formData,
-                    cache:false,
-                    contentType: false,
-                    processData: false,
-                    xhr: function() {
-                        let xhr = $.ajaxSettings.xhr();
-                        const divWidth = $('#container').width();
-                        $('#indicator').removeClass('hidden');
-                        xhr.upload.onprogress = function(e) {
-                            let percent = (Math.floor(e.loaded / e.total *100));
-                            let percentToPx = divWidth * (percent / 100)
-                            $('#indicator').css({
-                                width: percentToPx
-                            });
-                        };
-                        return xhr;
-                    },
-                    success:function(res){
-                        $('#fileF').attr('hidden', true)
-                        $('#fileFInputDiv').append('<label class="w-full shadow appearance-none border rounded py-2 px-3 text-grey-darker outline-none" id="fileFInputDivLabel">' + res.substr(1, 60) + '...</label>');
-                        $('#fileFResetButton').attr('disabled', false)
-                        $('#fileFUploadButton').attr('disabled', true)
                         $('#indicator').addClass('hidden');
                     },
                     error:function (res){

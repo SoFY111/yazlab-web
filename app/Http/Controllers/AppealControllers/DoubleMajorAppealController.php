@@ -12,7 +12,6 @@ use function Symfony\Component\String\u;
 
 class DoubleMajorAppealController extends Controller
 {
-
     protected $database;
     protected $storage;
     protected $currentUserId;
@@ -27,7 +26,7 @@ class DoubleMajorAppealController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {

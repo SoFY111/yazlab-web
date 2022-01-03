@@ -22,7 +22,7 @@
            href="{{route('dashboard')}}">Ana Sayfa</a>
         <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
            href="#">Başvurularım</a>
-        <div @click.away="open = @if(Request::segment(1) == 'capbasvuru') true @else false @endif" class="relative" x-data="{ open: @if(Request::segment(1) == 'capbasvuru') true @else false @endif }">
+        <div @click.away="open = @if(Request::segment(1) == 'cap-basvuru' || Request::segment(1) == 'yazokulu-basvuru') true @else false @endif" class="relative" x-data="{ open: @if(Request::segment(1) == 'cap-basvuru' || Request::segment(1) == 'yazokulu-basvuru') true @else false @endif }">
             <button @click="open = !open "
                     class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-gray-900 text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
                 <span>Başvuru Yap</span>
@@ -41,10 +41,10 @@
                  x-transition:leave-end="transform opacity-0 scale-95"
                  class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
                 <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
-                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 @if(Request::segment(1) == 'capbasvuru') bg-gray-200 @else hover:bg-gray-200 @endif focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 @if(Request::segment(1) == 'cap-basvuru') bg-gray-200 @else hover:bg-gray-200 @endif focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                        href="{{route('doubleMajorAppeal')}}">ÇAP Başvuru</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                       href="#">Yaz Okulu</a>
+                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 @if(Request::segment(1) == 'yazokulu-basvuru') bg-gray-200 @else hover:bg-gray-200 @endif hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                       href="{{route('summerSchoolAppeal')}}">Yaz Okulu</a>
                     <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                        href="#">DGS</a>
                     <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"

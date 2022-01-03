@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\FirebaseController;
 use App\Http\Controllers\AppealControllers\DoubleMajorAppealController;
+use App\Http\Controllers\AppealControllers\SummerSchoolController;
+use App\Http\Controllers\Controller;
 
 Route::group(['middleware' => 'isLogin'], function (){
 
@@ -27,7 +29,11 @@ Route::group(['middleware' => 'isLogged'], function (){
         return view('ornk');
     })->name('dashboard');
 
-    Route::get('capbasvuru', [DoubleMajorAppealController::class, 'index'])->name('doubleMajorAppeal');
+    Route::get('cap-basvuru', [DoubleMajorAppealController::class, 'index'])->name('doubleMajorAppeal');
+    Route::get('yazokulu-basvuru', [SummerSchoolController::class, 'index'])->name('summerSchoolAppeal');
+
     Route::get('cap-delete-file/{fileName}/{fileType}', [DoubleMajorAppealController::class, 'deleteFile'])->name('doubleMajorAppealDeleteFile');
     Route::post('upload-file', [DoubleMajorAppealController::class, 'uploadFile'])->name('doubleMajorAppealUploadFile');
+
+    Route::post('basvuru-acilis-degistir', [Controller::class, 'changeAppealOpening'])->name('appealOpeningChange');
 });
