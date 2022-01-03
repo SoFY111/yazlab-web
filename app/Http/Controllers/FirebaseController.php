@@ -75,10 +75,10 @@ class FirebaseController extends Controller
                     return redirect()->route('login')->withErrors('Hatalı şifre veya E-posta..');
                     break;
                 case 'EMAIL_NOT_FOUND':
-                    dd("Email Hatalı.");
+                    return redirect()->route('login')->withErrors('Hatalı E-Posta..');
                     break;
                 default:
-                    dd($e->getMessage());
+                    return redirect()->route('login')->withErrors('Bizimle iletişime geçiniz.');
                     break;
             }
         }

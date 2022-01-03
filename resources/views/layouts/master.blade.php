@@ -5,3 +5,5 @@
     <div class="flex-grow overflow">
         @yield('content')
     </div>
+
+@include('layouts.footer')

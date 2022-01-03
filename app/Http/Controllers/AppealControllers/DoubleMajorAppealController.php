@@ -8,15 +8,18 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Kreait\Firebase\Firestore;
 use Kreait\Firebase\Storage;
+use function Symfony\Component\String\u;
 
 class DoubleMajorAppealController extends Controller
 {
 
     protected $database;
     protected $storage;
+    protected $currentUserId;
 
     public function __construct(Firestore $firestore, Storage $storage)
     {
+        if (!Session::has('firebaseUserId') && !Session::has('idToken')) redirect()->route('login');
         $this->database = $firestore->database();
         $this->storage = $storage->getStorageClient();
     }
@@ -28,19 +31,22 @@ class DoubleMajorAppealController extends Controller
      */
     public function index()
     {
-        if (Session::has('firebaseUserId') && Session::has('idToken')) {
-            $currentUserId = Session::get('firebaseUserId');
-            $docRef = $this->database->collection('users')->document($currentUserId);
-            $snapshot = $docRef->snapshot();
-            if ($snapshot->exists()) {
-                $expiresAt = new \DateTime('tomorrow');
-                $profilePhoto = app('firebase.storage')->getBucket()->object('images/userProfilePicture/'.$snapshot->data()['profilePhoto'])->signedUrl($expiresAt);
-            } else {
-                printf('Veri Tabanı Hatası..');
+        $this->currentUserId = Session::get('firebaseUserId');
+        $docRef = $this->database->collection('users')
+            ->document($this->currentUserId)
+            ->collection('appeals')
+            ->where('appealType', '=', 0)
+            ->where('isStart', '=', 2)
+            ->documents()
+            ->rows();
+
+        foreach ($docRef as $document) {
+            if (!$document->exists()) return view('appealScreens.doubleMajor');
+            else {
+                $data = (object) $document->data();
+                return view('appealScreens.doubleMajor', compact('data'));
             }
         }
-
-        return view('appealScreens.doubleMajor');
     }
 
     /**
