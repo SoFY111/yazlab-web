@@ -28,7 +28,7 @@ class Controller extends BaseController
     }
 
     public function changeAppealOpening(Request $request){
-        $this->currentUserId = Session::has('firebaseUserId');
+        $this->currentUserId = Session::get('firebaseUserId');
         $this->database->collection('users')
             ->document($this->currentUserId)
             ->collection('appeals')

@@ -83,12 +83,86 @@
             </div>
         </div>
     </div>
+
+    @if($data->firstOpening === 1)
+        <div
+            class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+            id="my-modal"
+        ></div>
+
+        <div
+            class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+            style="position:absolute; top: 50%; right: 50%; transform: translate(50%,-50%);" id="modalCloseButton">
+            <div class="mt-3 text-center">
+                <div
+                    class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100"
+                >
+                    <i class="fa-solid fa-book text-green-600" style="font-size: 20px"></i>
+                </div>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Yaz Okulu Başvuru Sayfasına <br/>Hoş Geldiniz!</h3>
+                <div class="mt-2 px-7 py-3">
+                    <ul class="text-sm text-gray-500">
+                        <li>DGS Yerleştirme Sonuç Belgesi</li>
+                        <li>Önlisans Transkript</li>
+                        <li>Ders İçerikleri</li>
+                        <li>Ders Planı Müfredatı</li>
+                        <li>Mezuniyet Belgesi</li>
+                    </ul>
+                    <p class="text-sm text-gray-800 mt-3">Başvuru yapmak için bu belgeleri yüklemeniz gerekmeketedir.</p>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <a href="{{route('dashboard')}}">
+                        <button  class="px-4 py-2 mb-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
+                            Vazgeç
+                        </button>
+                    </a>
+                    <button
+                        id="ok-btn"
+                        class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+
 @endsection
 
 
 @section('js')
     <script>
         $(document).ready(function() {
+
+            let modal = document.getElementById("my-modal");
+            $('#my-modal').css('display', 'block');
+            let btn = document.getElementById("open-btn");
+
+            let button = document.getElementById("ok-btn");
+            $('#ok-btn').click(function() {
+                $('#my-modal').css('display', 'none');
+                $('#modalCloseButton').css('display', 'none');
+            })
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                }
+            });
+
+            $('#ok-btn').click(() => {
+                $.ajax({
+                    type:'post',
+                    url: '{{route('appealOpeningChange')}}',
+                    data: {appealUUID: "{{$data->appealUUID}}"},
+                    dataType: 'json',
+                    success:function(res){
+
+                    },
+                    error:function (res){
+                        console.log('basarisiz');
+                    }
+                })
+            });
 
             $('#fileX').attr('hidden', true)
             $('#fileY').attr('hidden', true)
@@ -176,11 +250,7 @@
                     })
                 @endif
             })
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                }
-            });
+
             $('#fileXForm').submit((e) => {
                 e.preventDefault();
                 console.log($('#fileX').val())

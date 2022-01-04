@@ -55,8 +55,6 @@ class SummerSchoolController extends Controller
                 'firstOpening' => 1
             ];
 
-            dd($docRef);
-
             return view('appealScreens.summerSchool', compact('data'));
         }
         foreach ($docRef->rows() as $document) {

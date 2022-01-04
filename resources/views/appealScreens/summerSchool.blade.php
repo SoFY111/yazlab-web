@@ -71,7 +71,21 @@
         </div>
     </div>
 
-    {{$data->appealUUID}}
+    <!-- fileF -->
+    <form class="w-2/3 m-0 p-4 flex flex-row items-center" id="fileFForm">
+        <div class="flex-grow flex flex-col" id="fileFInputDiv">
+            <label class="block text-grey-darker text-sm mb-1" for="fileX">FileF</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
+                   id="fileF" name="fileF" type="file" placeholder="Öğrenci No">
+        </div>
+        <div class="ml-2">
+            <label class="block opacity-0 text-sm mb-1">fileF</label>
+            <button type="reset" id="fileFResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
+            <button type="submit" id="fileFUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
+        </div>
+    </form>
+
+
     @if($data->firstOpening === 1)
         <div
             class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
@@ -164,6 +178,8 @@
             $('#fileZUploadButton').attr('disabled', true)
             $('#fileQResetButton').attr('disabled', true)
             $('#fileQUploadButton').attr('disabled', true)
+            $('#fileFResetButton').attr('disabled', true)
+            $('#fileFUploadButton').attr('disabled', true)
 
             @if(isset($data))
                 @if(isset($data->files['fileX']))
@@ -189,6 +205,12 @@
                     $('#fileQResetButton').attr('disabled', false)
                 @else
                     $('#fileQ').attr('hidden', false);
+                @endif
+                @if(isset($data->files['fileF']))
+                    $('#fileFInputDiv').append('<label class="w-full shadow appearance-none border rounded py-2 px-3 text-grey-darker outline-none" id="fileYInputDivLabel">{{substr($data->files['fileF'], 0, 60)}}...</label>');
+                    $('#fileFResetButton').attr('disabled', false)
+                @else
+                    $('#fileF').attr('hidden', false);
                 @endif
             @endif
             console.log( "ready!" );
@@ -508,6 +530,87 @@
                         $('#fileQInputDiv').append('<label class="w-full shadow appearance-none border rounded py-2 px-3 text-grey-darker outline-none" id="fileQInputDivLabel">' + res.substr(1, 60) + '...</label>');
                         $('#fileQResetButton').attr('disabled', false)
                         $('#fileQUploadButton').attr('disabled', true)
+                        $('#indicator').addClass('hidden');
+                    },
+                    error:function (res){
+                        console.log('yüklenmedi');
+                    }
+                })
+
+            })
+            //ENDOF fileQ
+
+            //fileF
+            $('#fileF').change(function(e) {
+                let fileName = this.files[0].name;
+                let isUpload = this.files.length;
+                console.log('The fileF name is : "' + fileName);
+                console.log(this.files.length);
+
+                if(isUpload > 0) $('#fileFResetButton').attr('disabled', false);
+                else $('#fileFResetButton').attr('disabled', true);
+                if(isUpload > 0) $('#fileFUploadButton').attr('disabled', false);
+                else $('#fileFUploadButton').attr('disabled', true)
+            });
+
+            $('#fileFResetButton').on('click', function() {
+                $('#fileF').val("")
+                $('#fileFResetButton').attr('disabled', true)
+                $('#fileFUploadButton').attr('disabled', true)
+
+                @if(isset($data->files['fileF']))
+                $('#fileFInputDivLabel').remove();
+                $('#fileF').attr('hidden', false);
+
+                $.ajax({
+                    type:'get',
+                    url: '{{route('doubleMajorAppealDeleteFile', [$data->files['fileF'], 'fileF'])}}',
+                    dataType: 'json',
+                    success:function(res){
+                        console.log(res);
+                        console.log('silindi');
+                    },
+                    error:function (res){
+                        console.log('silinmedi');
+                    }
+                })
+                @endif
+            })
+
+            $('#fileFForm').submit((e) => {
+                e.preventDefault();
+                console.log($('#fileF').val())
+
+                let formData = new FormData();
+                let file = $('#fileF')[0].files[0];
+                formData.append('file', file);
+                formData.append('fileType', 'fileF');
+                formData.append('appealUUID', '{{$data->appealUUID}}');
+                $.ajax({
+                    type:'POST',
+                    url: '{{route('doubleMajorAppealUploadFile')}}',
+                    data: formData,
+                    cache:false,
+                    contentType: false,
+                    processData: false,
+                    xhr: function() {
+                        let xhr = $.ajaxSettings.xhr();
+                        const divWidth = $('#container').width();
+                        $('#indicator').removeClass('hidden');
+                        xhr.upload.onprogress = function(e) {
+                            let percent = (Math.floor(e.loaded / e.total *100));
+                            let percentToPx = divWidth * (percent / 100)
+                            $('#indicator').css({
+                                width: percentToPx
+                            });
+                        };
+                        return xhr;
+                    },
+                    success:function(res){
+                        $('#fileF').attr('hidden', true)
+                        $('#fileFInputDiv').append('<label class="w-full shadow appearance-none border rounded py-2 px-3 text-grey-darker outline-none" id="fileFInputDivLabel">' + res.substr(1, 60) + '...</label>');
+                        $('#fileFResetButton').attr('disabled', false)
+                        $('#fileFUploadButton').attr('disabled', true)
                         $('#indicator').addClass('hidden');
                     },
                     error:function (res){

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Kreait\Firebase\Firestore;
 use Kreait\Firebase\Storage;
 use function Symfony\Component\String\u;
@@ -39,6 +40,29 @@ class DoubleMajorAppealController extends Controller
             ->documents()
             ->rows();
 
+        if ($docRef->size() == 0) {
+            $newAppealUUID = (string)Str::uuid();
+            $docRef = $this->database->collection('users')
+                ->document($this->currentUserId)
+                ->collection('appeals')
+                ->document($newAppealUUID)
+                ->set([
+                    'appealUUID' => $newAppealUUID,
+                    'createdAt' => date_timestamp_get(date_create()),
+                    'isStart' => 2,
+                    'appealType' => 3,
+                    'firstOpening' => 1
+                ], ['merge' => true]);
+
+            $data = [
+                'appealUUID' => $newAppealUUID,
+                'firstOpening' => 1
+            ];
+
+            dd($docRef);
+
+            return view('appealScreens.doubleMajor', compact('data'));
+        }
         foreach ($docRef as $document) {
             if (!$document->exists()) return view('appealScreens.doubleMajor');
             else {
