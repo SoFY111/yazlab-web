@@ -32,8 +32,8 @@ Route::group(['middleware' => 'isLogged'], function (){
     Route::get('cap-basvuru', [DoubleMajorAppealController::class, 'index'])->name('doubleMajorAppeal');
     Route::get('yazokulu-basvuru', [SummerSchoolController::class, 'index'])->name('summerSchoolAppeal');
 
-    Route::get('cap-delete-file/{fileName}/{fileType}', [DoubleMajorAppealController::class, 'deleteFile'])->name('doubleMajorAppealDeleteFile');
-    Route::post('upload-file', [DoubleMajorAppealController::class, 'uploadFile'])->name('doubleMajorAppealUploadFile');
 
+    Route::get('cap-delete-file/{appealUUID}/{fileType}', [Controller::class, 'deleteFile'])->name('doubleMajorAppealDeleteFile');
+    Route::post('upload-file', [Controller::class, 'uploadFile'])->name('doubleMajorAppealUploadFile');
     Route::post('basvuru-acilis-degistir', [Controller::class, 'changeAppealOpening'])->name('appealOpeningChange');
 });

@@ -38,7 +38,7 @@ class SummerSchoolController extends Controller
 
         if ($docRef->size() == 0) {
             $newAppealUUID = (string)Str::uuid();
-            $docRef = $this->database->collection('users')
+            $this->database->collection('users')
                 ->document($this->currentUserId)
                 ->collection('appeals')
                 ->document($newAppealUUID)

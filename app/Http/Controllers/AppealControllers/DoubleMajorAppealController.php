@@ -37,8 +37,7 @@ class DoubleMajorAppealController extends Controller
             ->collection('appeals')
             ->where('appealType', '=', 0)
             ->where('isStart', '=', 2)
-            ->documents()
-            ->rows();
+            ->documents();
 
         if ($docRef->size() == 0) {
             $newAppealUUID = (string)Str::uuid();
@@ -54,6 +53,15 @@ class DoubleMajorAppealController extends Controller
                     'firstOpening' => 1
                 ], ['merge' => true]);
 
+            $docRef = $this->database->collection('adminAppeals')
+                ->document($newAppealUUID)
+                ->set([
+                    'appealUUID' => $newAppealUUID,
+                    'createdAt' => date_timestamp_get(date_create()),
+                    'isStart' => 2,
+                    'appealType' => 3,
+                ], ['merge' => true]);
+
             $data = [
                 'appealUUID' => $newAppealUUID,
                 'firstOpening' => 1
@@ -63,7 +71,7 @@ class DoubleMajorAppealController extends Controller
 
             return view('appealScreens.doubleMajor', compact('data'));
         }
-        foreach ($docRef as $document) {
+        foreach ($docRef->rows() as $document) {
             if (!$document->exists()) return view('appealScreens.doubleMajor');
             else {
                 $data = (object) $document->data();
@@ -125,69 +133,6 @@ class DoubleMajorAppealController extends Controller
     public function update(Request $request, $id)
     {
         //
-    }
-
-    public function uploadFile(Request $request){
-        if ($request->hasFile('file')){
-            $this->currentUserId = Session::get('firebaseUserId');
-            $userRef = $this->database->collection('users')->document($this->currentUserId)->snapshot();
-
-            $studentNumber = $userRef['studentNumber'];
-            $userName = str_replace(' ', '-', $userRef['name']);
-
-            $fileName = $studentNumber.'_'.$userName.'_'.date_timestamp_get(date_create()).'_'.$request->appealUUID.'_'.$request->fileType.'.'.$request->file->extension();
-
-            if ($request->file->extension() == 'png' || $request->file->extension() == 'jpg' || $request->file->extension() == 'jpeg') $filePath = "images";
-            else if ($request->file->extension() == 'pdf') $filePath = "pdf";
-            else $filePath = "documents";
-
-            $this->database->collection('users')
-                ->document($this->currentUserId)
-                ->collection('appeals')
-                ->document(request()->appealUUID)
-                ->set([
-                    'files'=>[
-                        $request->fileType=> $fileName
-                    ]
-                ], ['merge' => true]);
-
-            $file = fopen($request->file, 'r');
-            $bucket = $this->storage->bucket('yazlab-proje-687f5.appspot.com');
-            $bucket->upload($file, [
-                'name' => $filePath.'/'.request()->appealUUID.'/'.$fileName
-            ]);
-            return json_encode($fileName);
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param string $fileName
-     *
-     */
-    public function deleteFile($fileName, $fileType)
-    {
-        $this->currentUserId = Session::get('firebaseUserId');
-
-        $appealUUID = explode('_', $fileName);
-        $fileExt = explode('.', $appealUUID[4])[1];
-        $this->database->collection('users')
-            ->document($this->currentUserId)
-            ->collection('appeals')
-            ->document($appealUUID[3])
-            ->set([
-               'files'=>[
-                   $fileType => null,
-                ],
-            ], ['merge' => true]);
-
-        if ($fileExt == 'png' || $fileExt == 'jpg' || $fileExt == 'jpeg') $filePath = "images";
-        else if ($fileExt == 'pdf') $filePath = "pdf";
-        else $filePath = "documents";
-
-        app('firebase.storage')->getBucket()->object($filePath.'/'.$appealUUID[3].'/'.$fileName)->delete();
-        return json_encode(['msg'=>'silindi']);
     }
 
     /**
