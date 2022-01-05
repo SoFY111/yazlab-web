@@ -1,9 +1,9 @@
 @extends('layouts.master')
-@section('title') Dikey Geçiş Başvuru @endsection
-@section('headerTitle') Dikey Geçiş Başvuru @endsection
+@section('title') Yaz Okulu Başvuru@endsection
+@section('headerTitle') Yaz Okulu Başvuru@endsection
 @section('content')
     <div class="w-2/3 border-b py-2 m-auto flex flex-row items-center justify-center">
-        <h2 class="font-medium" style="font-size: 22px;">Dikey Geçiş Başvurusu</h2>
+        <h2 class="font-medium" style="font-size: 22px;">Yaz Okulu Başvuru</h2>
     </div>
     <div class="container">
         <div class="flex flex-col justify-center items-center">
@@ -11,11 +11,11 @@
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" enctype="multipart/form-data" id="fileXForm">
                 @csrf
                 <div class="flex-grow flex flex-col" id="fileXInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">DGS Yerleştirme Sonuç Belgesi</label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none" id="fileX" name="fileX" type="file" placeholder="Öğrenci No">
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Yaz Okulu Ders Dilekçesi</label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none" id="fileX" name="fileX" type="file">
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">DGS Sonuç Belgesi</label>
+                    <label class="block opacity-0 text-sm mb-1">Yaz Dilekçesi</label>
                     <button type="reset" id="fileXResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileXUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
@@ -24,12 +24,12 @@
             <!-- fileY -->
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" enctype="multipart/form-data" id="fileYForm">
                 <div class="flex-grow flex flex-col" id="fileYInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Önlisans Transkript</label>
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Okul Taban Puanları</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
-                           id="fileY" name="fileY" type="file" placeholder="Öğrenci No">
+                           id="fileY" name="fileY" type="file">
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">Önlisans Transkript</label>
+                    <label class="block opacity-0 text-sm mb-1">Okul Taban</label>
                     <button type="reset" id="fileYResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileYUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
@@ -37,12 +37,12 @@
             <!-- fileZ -->
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" id="fileZForm">
                 <div class="flex-grow flex flex-col" id="fileZInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Ders İçerikleri</label>
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Transkript</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
-                           id="fileZ" name="fileZ" type="file" placeholder="Öğrenci No">
+                           id="fileZ" name="fileZ" type="file">
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">Ders İçerikleri</label>
+                    <label class="block opacity-0 text-sm mb-1">Transkript</label>
                     <button type="reset" id="fileZResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileZUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
@@ -51,36 +51,24 @@
             <!-- fileQ -->
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" id="fileQForm">
                 <div class="flex-grow flex flex-col" id="fileQInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Ders Planı Müfredatı</label>
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Ders İçerikleri</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
-                           id="fileQ" name="fileQ" type="file" placeholder="Öğrenci No">
+                           id="fileQ" name="fileQ" type="file" >
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">Ders Planı Müfredatı</label>
+                    <label class="block opacity-0 text-sm mb-1">Ders İçerikleri</label>
                     <button type="reset" id="fileQResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileQUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
             </form>
-            <!-- fileF -->
-            <form class="w-2/3 m-0 p-4 flex flex-row items-center" id="fileFForm">
-                <div class="flex-grow flex flex-col" id="fileFInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Mezuniyet Belgesi</label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
-                           id="fileF" name="fileF" type="file" placeholder="Öğrenci No">
-                </div>
-                <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">Mezuniyet Belgesi</label>
-                    <button type="reset" id="fileFResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
-                    <button type="submit" id="fileFUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
-                </div>
-            </form>
+
             <div class="w-2/3 pl-4 flex flex-col justify-start">
                 <div class="flex flex-row items-center">
                     <input class="" id="trustCheck" name="trustCheck" type="checkbox">
                     <label class="block text-grey-darker text-sm pl-2" for="trustCheck">Evrakların bana ait olduğunu kabul ediyorum.</label>
                 </div>
-                <form class="">
-                    <button type="submit" class="w-full bg-kou-normal hover:bg-kou-dark text-white mt-2 py-2 px-4 rounded-lg transition text-center disabled:bg-gray-400 disabled:cursor-default">Başvuru Yap</button>
+                <form>
+                    <button type="submit" id="openAppealModalButton" class="w-full bg-kou-normal hover:bg-kou-dark text-white mt-2 py-2 px-4 rounded-lg transition text-center disabled:bg-gray-400 disabled:cursor-default">Başvuru Yap</button>
                 </form>
             </div>
         </div>
@@ -135,8 +123,7 @@
         </div>
     </div>
 
-
-    @if($data->firstOpening == 1 )
+    @if($data->firstOpening == 1)
         <div
             class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
             id="my-modal"
@@ -151,15 +138,14 @@
                 >
                     <i class="fa-solid fa-book text-green-600" style="font-size: 20px"></i>
                 </div>
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Dikey Geçiş Başvuru Sayfasına <br/>Hoş Geldiniz!</h3>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Yaz Okulu Başvuru Sayfasına <br/>Hoş Geldiniz!</h3>
                 <div class="mt-2 px-7 py-3">
-                        <ul class="text-sm text-gray-500">
-                            <li>DGS Yerleştirme Sonuç Belgesi</li>
-                            <li>Önlisans Transkript</li>
-                            <li>Ders İçerikleri</li>
-                            <li>Ders Planı Müfredatı</li>
-                            <li>Mezuniyet Belgesi</li>
-                        </ul>
+                    <ul class="text-sm text-gray-500">
+                        <li>Yaz Okulu Ders Dilekçesi</li>
+                        <li>Okul Taban Puanları</li>
+                        <li>Transkript</li>
+                        <li>Ders İçerikleri</li>
+                    </ul>
                     <p class="text-sm text-gray-800 mt-3">Başvuru yapmak için bu belgeleri yüklemeniz gerekmeketedir.</p>
                 </div>
                 <div class="items-center px-4 py-3">

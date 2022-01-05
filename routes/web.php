@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FirebaseController;
 use App\Http\Controllers\AppealControllers\DoubleMajorAppealController;
 use App\Http\Controllers\AppealControllers\VerticalAppealController;
+use App\Http\Controllers\AppealControllers\HorizontalAppealController;
+use App\Http\Controllers\AppealControllers\SummerSchoolAppealController;
+use App\Http\Controllers\AppealControllers\ClassAdaptationAppealController;
 use App\Http\Controllers\Controller;
 
 Route::group(['middleware' => 'isLogin'], function (){
@@ -31,6 +34,9 @@ Route::group(['middleware' => 'isLogged'], function (){
 
     Route::get('cap-basvuru', [DoubleMajorAppealController::class, 'index'])->name('doubleMajorAppeal');
     Route::get('dikey-gecis-basvuru', [VerticalAppealController::class, 'index'])->name('verticalAppeal');
+    Route::get('yatay-gecis-basvuru', [HorizontalAppealController::class, 'index'])->name('horizontalAppeal');
+    Route::get('yaz-okulu-basvuru', [SummerSchoolAppealController::class, 'index'])->name('summerSchoolAppeal');
+    Route::get('ders-intibak-basvuru', [ClassAdaptationAppealController::class, 'index'])->name('classAdaptation');
 
 
     Route::get('cap-delete-file/{appealUUID}/{fileType}', [Controller::class, 'deleteFile'])->name('appealDeleteFile');
