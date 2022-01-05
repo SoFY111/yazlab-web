@@ -78,7 +78,7 @@ class FirebaseController extends Controller
                     return redirect()->route('login')->withErrors('Hatalı E-Posta..');
                     break;
                 default:
-                    return redirect()->route('login')->withErrors('Bizimle iletişime geçiniz.');
+                    return redirect()->route('login')->withErrors('Bizimle iletişime geçiniz. '. $e->getMessage());
                     break;
             }
         }

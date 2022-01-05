@@ -146,7 +146,24 @@ class Controller extends BaseController
     }
 
     public function storeAppeal(Request $request){
-        dd($request->post());
+        $this->currentUserId = Session::get('firebaseUserId');
+
+
+        $this->database->collection('users')
+            ->document($this->currentUserId)
+            ->collection('appeals')
+            ->document($request->appealUUID)
+            ->set([
+                'isStart' => 1
+            ], ['merge' => true]);
+
+        $this->database->collection('adminAppeals')
+            ->document($request->appealUUID)
+            ->set([
+                'isStart' => 1
+            ], ['merge' => true]);
+
+        return redirect()->route('dashboard');
     }
 
 }

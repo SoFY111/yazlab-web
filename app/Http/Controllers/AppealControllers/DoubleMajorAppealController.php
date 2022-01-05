@@ -67,8 +67,6 @@ class DoubleMajorAppealController extends Controller
                 'firstOpening' => 1
             ];
 
-            dd($docRef);
-
             return view('appealScreens.doubleMajor', compact('data'));
         }
         foreach ($docRef->rows() as $document) {
