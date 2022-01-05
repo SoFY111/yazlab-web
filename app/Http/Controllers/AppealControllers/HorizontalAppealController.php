@@ -48,7 +48,9 @@ class HorizontalAppealController extends Controller
                     'createdAt' => date_timestamp_get(date_create()),
                     'isStart' => 2,
                     'appealType' => 2,
-                    'firstOpening' => 1
+                    'firstOpening' => 1,
+                    'files' => [],
+                    'result' => []
                 ], ['merge' => true]);
 
             $data = (object)[

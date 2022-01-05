@@ -1,6 +1,6 @@
 @extends('layouts.master')
-@section('title') Yaz Okulu Başvuru@endsection
-@section('headerTitle') Yaz Okulu Başvuru@endsection
+@section('title') Yaz Okulu Başvuru @endsection
+@section('headerTitle') Yaz Okulu Başvuru @endsection
 @section('content')
     <div class="w-2/3 border-b py-2 m-auto flex flex-row items-center justify-center">
         <h2 class="font-medium" style="font-size: 22px;">Yaz Okulu Başvuru</h2>

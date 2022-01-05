@@ -1,6 +1,6 @@
 @extends('layouts.master')
-@section('title') Ders İntibak Başvurusu@endsection
-@section('headerTitle') Ders İntibak Başvurusu@endsection
+@section('title') Ders İntibak Başvurusu @endsection
+@section('headerTitle') Ders İntibak Başvurusu @endsection
 @section('content')
     <div class="w-2/3 border-b py-2 m-auto flex flex-row items-center justify-center">
         <h2 class="font-medium" style="font-size: 22px;">Ders İntibak Başvurusu</h2>
@@ -67,7 +67,7 @@
                     <label class="block text-grey-darker text-sm pl-2" for="trustCheck">Evrakların bana ait olduğunu kabul ediyorum.</label>
                 </div>
                 <form class="">
-                    <button type="submit" class="w-full bg-kou-normal hover:bg-kou-dark text-white mt-2 py-2 px-4 rounded-lg transition text-center disabled:bg-gray-400 disabled:cursor-default">Başvuru Yap</button>
+                    <button type="submit" id="openAppealModalButton" class="w-full bg-kou-normal hover:bg-kou-dark text-white mt-2 py-2 px-4 rounded-lg transition text-center disabled:bg-gray-400 disabled:cursor-default">Başvuru Yap</button>
                 </form>
             </div>
         </div>
