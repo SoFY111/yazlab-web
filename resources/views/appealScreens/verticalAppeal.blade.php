@@ -1,9 +1,9 @@
 @extends('layouts.master')
-@section('title') Yaz Okulu Başvuru @endsection
-@section('headerTitle') Yaz Okulu Başvuru @endsection
+@section('title') Dikey Geçiş Başvuru @endsection
+@section('headerTitle') Dikey Geçiş Başvuru @endsection
 @section('content')
     <div class="w-2/3 border-b py-2 m-auto flex flex-row items-center justify-center">
-        <h2 class="font-medium" style="font-size: 22px;">Yaz Okulu Başvurusu</h2>
+        <h2 class="font-medium" style="font-size: 22px;">Dikey Geçiş Başvurusu</h2>
     </div>
     <div class="container">
         <div class="flex flex-col justify-center items-center">
@@ -11,11 +11,11 @@
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" enctype="multipart/form-data" id="fileXForm">
                 @csrf
                 <div class="flex-grow flex flex-col" id="fileXInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">FileX</label>
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">DGS Yerleştirme Sonuç Belgesi</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none" id="fileX" name="fileX" type="file" placeholder="Öğrenci No">
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">FileX</label>
+                    <label class="block opacity-0 text-sm mb-1">DGS Sonuç Belgesi</label>
                     <button type="reset" id="fileXResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileXUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
@@ -24,12 +24,12 @@
             <!-- fileY -->
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" enctype="multipart/form-data" id="fileYForm">
                 <div class="flex-grow flex flex-col" id="fileYInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">FileY</label>
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Önlisans Transkript</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
                            id="fileY" name="fileY" type="file" placeholder="Öğrenci No">
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">fileY</label>
+                    <label class="block opacity-0 text-sm mb-1">Önlisans Transkript</label>
                     <button type="reset" id="fileYResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileYUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
@@ -37,12 +37,12 @@
             <!-- fileZ -->
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" id="fileZForm">
                 <div class="flex-grow flex flex-col" id="fileZInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">FileZ</label>
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Ders İçerikleri</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
                            id="fileZ" name="fileZ" type="file" placeholder="Öğrenci No">
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">fileZ</label>
+                    <label class="block opacity-0 text-sm mb-1">Ders İçerikleri</label>
                     <button type="reset" id="fileZResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileZUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
@@ -51,12 +51,12 @@
             <!-- fileQ -->
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" id="fileQForm">
                 <div class="flex-grow flex flex-col" id="fileQInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">FileQ</label>
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Ders Planı Müfredatı</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
                            id="fileQ" name="fileQ" type="file" placeholder="Öğrenci No">
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">fileQ</label>
+                    <label class="block opacity-0 text-sm mb-1">Ders Planı Müfredatı</label>
                     <button type="reset" id="fileQResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileQUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
@@ -64,12 +64,12 @@
             <!-- fileF -->
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" id="fileFForm">
                 <div class="flex-grow flex flex-col" id="fileFInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">FileF</label>
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Mezuniyet Belgesi</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
                            id="fileF" name="fileF" type="file" placeholder="Öğrenci No">
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">fileF</label>
+                    <label class="block opacity-0 text-sm mb-1">Mezuniyet Belgesi</label>
                     <button type="reset" id="fileFResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileFUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    @if($data->firstOpening === 1)
+    @if($data->firstOpening == 1 )
         <div
             class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
             id="my-modal"
@@ -101,7 +101,7 @@
                 >
                     <i class="fa-solid fa-book text-green-600" style="font-size: 20px"></i>
                 </div>
-                <h3 class="text-lg leading-6 font-medium text-gray-900">ÇAP Başvuru Sayfasına <br/>Hoş Geldiniz!</h3>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Dikey Geçiş Başvuru Sayfasına <br/>Hoş Geldiniz!</h3>
                 <div class="mt-2 px-7 py-3">
                         <ul class="text-sm text-gray-500">
                             <li>DGS Yerleştirme Sonuç Belgesi</li>
@@ -241,7 +241,7 @@
 
                 $.ajax({
                     type:'get',
-                    url: '{{route('doubleMajorAppealDeleteFile', [$data->appealUUID, 'fileX'])}}',
+                    url: '{{route('appealDeleteFile', [$data->appealUUID, 'fileX'])}}',
                     dataType: 'json',
                     success:function(res){
                         console.log(res);
@@ -266,7 +266,7 @@
                 formData.append('appealUUID', '{{$data->appealUUID}}');
                 $.ajax({
                     type:'POST',
-                    url: '{{route('doubleMajorAppealUploadFile')}}',
+                    url: '{{route('appealUploadFile')}}',
                     data: formData,
                     cache:false,
                     contentType: false,
@@ -326,7 +326,7 @@
 
                 $.ajax({
                     type:'get',
-                    url: '{{route('doubleMajorAppealDeleteFile', [$data->appealUUID, 'fileY'])}}',
+                    url: '{{route('appealDeleteFile', [$data->appealUUID, 'fileY'])}}',
                     dataType: 'json',
                     success:function(res){
                         console.log(res);
@@ -351,7 +351,7 @@
                 formData.append('appealUUID', '{{$data->appealUUID}}');
                 $.ajax({
                     type:'POST',
-                    url: '{{route('doubleMajorAppealUploadFile')}}',
+                    url: '{{route('appealUploadFile')}}',
                     data: formData,
                     cache:false,
                     contentType: false,
@@ -409,7 +409,7 @@
 
                 $.ajax({
                     type:'get',
-                    url: '{{route('doubleMajorAppealDeleteFile', [$data->appealUUID, 'fileZ'])}}',
+                    url: '{{route('appealDeleteFile', [$data->appealUUID, 'fileZ'])}}',
                     dataType: 'json',
                     success:function(res){
                         console.log(res);
@@ -435,7 +435,7 @@
                 formData.append('appealUUID', '{{$data->appealUUID}}');
                 $.ajax({
                     type:'POST',
-                    url: '{{route('doubleMajorAppealUploadFile')}}',
+                    url: '{{route('appealUploadFile')}}',
                     data: formData,
                     cache:false,
                     contentType: false,
@@ -493,7 +493,7 @@
 
                 $.ajax({
                     type:'get',
-                    url: '{{route('doubleMajorAppealDeleteFile', [$data->appealUUID, 'fileQ'])}}',
+                    url: '{{route('appealDeleteFile', [$data->appealUUID, 'fileQ'])}}',
                     dataType: 'json',
                     success:function(res){
                         console.log(res);
@@ -518,7 +518,7 @@
                 formData.append('appealUUID', '{{$data->appealUUID}}');
                 $.ajax({
                     type:'POST',
-                    url: '{{route('doubleMajorAppealUploadFile')}}',
+                    url: '{{route('appealUploadFile')}}',
                     data: formData,
                     cache:false,
                     contentType: false,
@@ -576,7 +576,7 @@
 
                 $.ajax({
                     type:'get',
-                    url: '{{route('doubleMajorAppealDeleteFile', [$data->appealUUID, 'fileF'])}}',
+                    url: '{{route('appealDeleteFile', [$data->appealUUID, 'fileF'])}}',
                     dataType: 'json',
                     success:function(res){
                         console.log(res);
@@ -602,7 +602,7 @@
                 formData.append('appealUUID', '{{$data->appealUUID}}');
                 $.ajax({
                     type:'POST',
-                    url: '{{route('doubleMajorAppealUploadFile')}}',
+                    url: '{{route('appealUploadFile')}}',
                     data: formData,
                     cache:false,
                     contentType: false,

@@ -56,6 +56,13 @@ class Controller extends BaseController
 
         $fileName = $appeal['files'][$fileType];
 
+        if($appeal['appealType'] == 0 || $appeal['appealType'] == 1) $totalFile = 5;
+        else $totalFile = 4;
+        $fileCount = 0;
+        foreach ($appeal['files'] as $appealFile) {
+            if($appealFile != null) $fileCount++;
+        }
+
         $fileExt = explode('.', $fileName)[1];
         $this->database->collection('users')
             ->document($this->currentUserId)
@@ -65,6 +72,13 @@ class Controller extends BaseController
                 'files'=>[
                     $fileType => null,
                 ],
+                'percent' => (($fileCount - 1) / $totalFile) * 100,
+            ], ['merge' => true]);
+
+        $this->database->collection('adminAppeals')
+            ->document($appealUUID)
+            ->set([
+                'percent' => (($fileCount - 1) / $totalFile) * 100,
             ], ['merge' => true]);
 
         if ($fileExt == 'png' || $fileExt == 'jpg' || $fileExt == 'jpeg') $filePath = "images";
@@ -85,9 +99,20 @@ class Controller extends BaseController
 
             $fileName = $studentNumber.'_'.$userName.'_'.date_timestamp_get(date_create()).'_'.$request->appealUUID.'_'.$request->fileType.'.'.$request->file->extension();
 
-            if ($request->file->extension() == 'png' || $request->file->extension() == 'jpg' || $request->file->extension() == 'jpeg') $filePath = "images";
-            else if ($request->file->extension() == 'pdf') $filePath = "pdf";
-            else $filePath = "documents";
+            $appeal = $this->database->collection('users')
+                ->document($this->currentUserId)
+                ->collection('appeals')
+                ->document($request->appealUUID)
+                ->snapshot();
+
+            if($appeal['appealType'] == 0 || $appeal['appealType'] == 1) $totalFile = 5;
+            else $totalFile = 4;
+
+            $fileCount = 0;
+            foreach ($appeal['files'] as $appealFile) {
+                if($appealFile != null) $fileCount++;
+            }
+
 
             $this->database->collection('users')
                 ->document($this->currentUserId)
@@ -95,17 +120,33 @@ class Controller extends BaseController
                 ->document(request()->appealUUID)
                 ->set([
                     'files'=>[
-                        $request->fileType=> $fileName
-                    ]
+                        $request->fileType => $fileName,
+                    ],
+                    'percent' => (($fileCount + 1) / $totalFile) * 100,
                 ], ['merge' => true]);
+
+            $this->database->collection('adminAppeals')
+                ->document($request->appealUUID)
+                ->set([
+                    'percent' => (($fileCount + 1) / $totalFile) * 100,
+                ], ['merge' => true]);
+
+            if ($request->file->extension() == 'png' || $request->file->extension() == 'jpg' || $request->file->extension() == 'jpeg') $filePath = "images";
+            else if ($request->file->extension() == 'pdf') $filePath = "pdf";
+            else $filePath = "documents";
 
             $file = fopen($request->file, 'r');
             $bucket = $this->storage->bucket('yazlab-proje-687f5.appspot.com');
             $bucket->upload($file, [
                 'name' => $filePath.'/'.request()->appealUUID.'/'.$fileName
             ]);
+
             return json_encode($fileName);
         }
+    }
+
+    public function storeAppeal(Request $request){
+        dd($request->post());
     }
 
 }

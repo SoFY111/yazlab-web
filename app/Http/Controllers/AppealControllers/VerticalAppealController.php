@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Kreait\Firebase\Firestore;
 use Kreait\Firebase\Storage;
 
-class SummerSchoolController extends Controller
+class VerticalAppealController extends Controller
 {
     protected $database;
     protected $storage;
@@ -32,7 +32,7 @@ class SummerSchoolController extends Controller
         $docRef = $this->database->collection('users')
             ->document($this->currentUserId)
             ->collection('appeals')
-            ->where('appealType', '=', 3)
+            ->where('appealType', '=', 1)
             ->where('isStart', '=', 2)
             ->documents();
 
@@ -46,22 +46,32 @@ class SummerSchoolController extends Controller
                     'appealUUID' => $newAppealUUID,
                     'createdAt' => date_timestamp_get(date_create()),
                     'isStart' => 2,
-                    'appealType' => 3,
+                    'appealType' => 1,
                     'firstOpening' => 1
                 ], ['merge' => true]);
 
-            $data = [
+            $data = (object)[
                 'appealUUID' => $newAppealUUID,
                 'firstOpening' => 1
             ];
 
-            return view('appealScreens.summerSchool', compact('data'));
+            $this->database->collection('adminAppeals')
+                ->document($newAppealUUID)
+                ->set([
+                    'appealUUID' => $newAppealUUID,
+                    'createdAt' => date_timestamp_get(date_create()),
+                    'isStart' => 2,
+                    'appealType' => 1,
+            ], ['merge' => true]);
+
+
+            return view('appealScreens.verticalAppeal', compact('data'));
         }
         foreach ($docRef->rows() as $document) {
-            if (!$document->exists()) return view('appealScreens.summerSchool');
+            if (!$document->exists()) return view('appealScreens.verticalAppeal');
             else {
                 $data = (object)$document->data();
-                return view('appealScreens.summerSchool', compact('data'));
+                return view('appealScreens.verticalAppeal', compact('data'));
             }
         }
     }

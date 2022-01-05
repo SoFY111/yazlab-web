@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\FirebaseController;
 use App\Http\Controllers\AppealControllers\DoubleMajorAppealController;
-use App\Http\Controllers\AppealControllers\SummerSchoolController;
+use App\Http\Controllers\AppealControllers\VerticalAppealController;
 use App\Http\Controllers\Controller;
 
 Route::group(['middleware' => 'isLogin'], function (){
@@ -30,10 +30,11 @@ Route::group(['middleware' => 'isLogged'], function (){
     })->name('dashboard');
 
     Route::get('cap-basvuru', [DoubleMajorAppealController::class, 'index'])->name('doubleMajorAppeal');
-    Route::get('yazokulu-basvuru', [SummerSchoolController::class, 'index'])->name('summerSchoolAppeal');
+    Route::get('dikey-gecis-basvuru', [VerticalAppealController::class, 'index'])->name('verticalAppeal');
 
 
-    Route::get('cap-delete-file/{appealUUID}/{fileType}', [Controller::class, 'deleteFile'])->name('doubleMajorAppealDeleteFile');
-    Route::post('upload-file', [Controller::class, 'uploadFile'])->name('doubleMajorAppealUploadFile');
+    Route::get('cap-delete-file/{appealUUID}/{fileType}', [Controller::class, 'deleteFile'])->name('appealDeleteFile');
+    Route::post('upload-file', [Controller::class, 'uploadFile'])->name('appealUploadFile');
     Route::post('basvuru-acilis-degistir', [Controller::class, 'changeAppealOpening'])->name('appealOpeningChange');
+    Route::post('basvuru-kaydet', [Controller::class, 'storeAppeal'])->name('storeAppeal');
 });

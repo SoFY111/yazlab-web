@@ -44,11 +44,11 @@
                     <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 @if(Request::segment(1) == 'cap-basvuru') bg-gray-200 @else hover:bg-gray-200 @endif focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                        href="{{route('doubleMajorAppeal')}}">ÇAP Başvuru</a>
                     <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 @if(Request::segment(1) == 'yazokulu-basvuru') bg-gray-200 @else hover:bg-gray-200 @endif hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                       href="{{route('summerSchoolAppeal')}}">Yaz Okulu</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                       href="#">DGS</a>
+                       href="{{route('verticalAppeal')}}">DGS</a>
                     <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                        href="#">Yatay Geçiş</a>
+                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                       href="#">Yaz Okulu</a>
                     <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                        href="#">Ders İntibak</a>
                 </div>

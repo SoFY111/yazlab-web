@@ -11,11 +11,11 @@
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" enctype="multipart/form-data" id="fileXForm">
                 @csrf
                 <div class="flex-grow flex flex-col" id="fileXInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">FileX</label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none" id="fileX" name="fileX" type="file" placeholder="Öğrenci No">
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Transkript</label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none" id="fileX" name="fileX" type="file">
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">FileX</label>
+                    <label class="block opacity-0 text-sm mb-1">Transkript</label>
                     <button type="reset" id="fileXResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileXUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
@@ -24,12 +24,12 @@
             <!-- fileY -->
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" enctype="multipart/form-data" id="fileYForm">
                 <div class="flex-grow flex flex-col" id="fileYInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">FileY</label>
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Anadal Başarı Sıralaması</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
-                           id="fileY" name="fileY" type="file" placeholder="Öğrenci No">
+                           id="fileY" name="fileY" type="file">
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">fileY</label>
+                    <label class="block opacity-0 text-sm mb-1">Anadal Başarı</label>
                     <button type="reset" id="fileYResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileYUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
@@ -37,12 +37,12 @@
             <!-- fileZ -->
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" id="fileZForm">
                 <div class="flex-grow flex flex-col" id="fileZInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">FileZ</label>
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">ÖSYM Belgesi</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
-                           id="fileZ" name="fileZ" type="file" placeholder="Öğrenci No">
+                           id="fileZ" name="fileZ" type="file">
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">fileZ</label>
+                    <label class="block opacity-0 text-sm mb-1">ÖSYM Belgesi</label>
                     <button type="reset" id="fileZResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileZUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
@@ -51,12 +51,12 @@
             <!-- fileQ -->
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" id="fileQForm">
                 <div class="flex-grow flex flex-col" id="fileQInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">FileQ</label>
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Yabancı Dil Belgesi</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
-                           id="fileQ" name="fileQ" type="file" placeholder="Öğrenci No">
+                           id="fileQ" name="fileQ" type="file" >
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">fileQ</label>
+                    <label class="block opacity-0 text-sm mb-1">Yabancı Dil Belgesi</label>
                     <button type="reset" id="fileQResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileQUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
@@ -65,29 +65,80 @@
             <!-- fileF -->
             <form class="w-2/3 m-0 p-4 flex flex-row items-center" id="fileFForm">
                 <div class="flex-grow flex flex-col" id="fileFInputDiv">
-                    <label class="block text-grey-darker text-sm mb-1" for="fileX">FileF</label>
+                    <label class="block text-grey-darker text-sm mb-1" for="fileX">Çap Başvuru Dilekçesi</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
-                           id="fileF" name="fileF" type="file" placeholder="Öğrenci No">
+                           id="fileF" name="fileF" type="file" >
                 </div>
                 <div class="ml-2">
-                    <label class="block opacity-0 text-sm mb-1">fileF</label>
+                    <label class="block opacity-0 text-sm mb-1">Çap Başvuru </label>
                     <button type="reset" id="fileFResetButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Sil</button>
                     <button type="submit" id="fileFUploadButton" class="bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition disabled:bg-gray-400 disabled:cursor-default">Yükle</button>
                 </div>
             </form>
+            <!-- ENDOF fileF -->
+
             <div class="w-2/3 pl-4 flex flex-col justify-start">
                 <div class="flex flex-row items-center">
                     <input class="" id="trustCheck" name="trustCheck" type="checkbox">
                     <label class="block text-grey-darker text-sm pl-2" for="trustCheck">Evrakların bana ait olduğunu kabul ediyorum.</label>
                 </div>
-                <form class="">
-                    <button type="submit" class="w-full bg-kou-normal hover:bg-kou-dark text-white mt-2 py-2 px-4 rounded-lg transition text-center disabled:bg-gray-400 disabled:cursor-default">Başvuru Yap</button>
+                <form>
+                    <button type="submit" id="openAppealModalButton" class="w-full bg-kou-normal hover:bg-kou-dark text-white mt-2 py-2 px-4 rounded-lg transition text-center disabled:bg-gray-400 disabled:cursor-default">Başvuru Yap</button>
                 </form>
             </div>
         </div>
     </div>
 
-    @if($data->firstOpening === 1)
+    <div
+        class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+        id="appealModal"
+    ></div>
+
+    <div
+        class="relative hidden top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+        style="position:absolute; top: 50%; right: 50%; transform: translate(50%,-50%);" id="appealModalCloseButton">
+        <div class="mt-3 text-center">
+            <div
+                class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-2"
+            >
+                <svg
+                    class="h-6 w-6 text-green-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                    ></path>
+                </svg>
+            </div>
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Başvuruyu Bitir</h3>
+            <div class="mt-2 px-7 py-3">
+                <label class="text-sm text-gray-800 mt-3">Bütün belgelerin size ait olduğunu kabul ederek başvuruyu tamamlamak istiyor musunuz?</label>
+            </div>
+            <div class="items-center px-4 py-3">
+                <button id="appealModalRealCloseButton" class="px-4 py-2 mb-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
+                    Vazgeç
+                </button>
+                <form action="{{route('storeAppeal')}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="appealUUID" value="{{$data->appealUUID}}">
+                    <button
+                        id="appealModalOkButton"
+                        class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                        Tamamla
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    @if($data->firstOpening == 1)
         <div
             class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
             id="my-modal"
@@ -102,14 +153,14 @@
                 >
                     <i class="fa-solid fa-book text-green-600" style="font-size: 20px"></i>
                 </div>
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Yaz Okulu Başvuru Sayfasına <br/>Hoş Geldiniz!</h3>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">ÇAP Başvuru Sayfasına <br/>Hoş Geldiniz!</h3>
                 <div class="mt-2 px-7 py-3">
                     <ul class="text-sm text-gray-500">
-                        <li>DGS Yerleştirme Sonuç Belgesi</li>
-                        <li>Önlisans Transkript</li>
-                        <li>Ders İçerikleri</li>
-                        <li>Ders Planı Müfredatı</li>
-                        <li>Mezuniyet Belgesi</li>
+                        <li>Transkript</li>
+                        <li>Anadal Başarı Sırası</li>
+                        <li>ÖSYM Belgesi</li>
+                        <li>Yabancı Dil Belgesi</li>
+                        <li>Çap Başvuru Dilekçesi</li>
                     </ul>
                     <p class="text-sm text-gray-800 mt-3">Başvuru yapmak için bu belgeleri yüklemeniz gerekmeketedir.</p>
                 </div>
@@ -136,23 +187,32 @@
     <script>
         $(document).ready(function() {
 
-            let modal = document.getElementById("my-modal");
-            $('#my-modal').css('display', 'block');
-            let btn = document.getElementById("open-btn");
-
-            let button = document.getElementById("ok-btn");
-            $('#ok-btn').click(function() {
-                $('#my-modal').css('display', 'none');
-                $('#modalCloseButton').css('display', 'none');
-            })
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 }
             });
 
-            $('#ok-btn').click(() => {
+            $('#appealModal').css('display', 'none');
+            $('#appealModalCloseButton').css('display', 'none');
+
+            $('#openAppealModalButton').on('click', (e) => {
+                e.preventDefault();
+                $('#appealModal').css('display', 'block');
+                $('#appealModalCloseButton').css('display', 'block');
+            })
+
+            $('#appealModalRealCloseButton').on('click', () => {
+                $('#appealModal').css('display', 'none');
+                $('#appealModalCloseButton').css('display', 'none');
+            })
+
+            $('#my-modal').css('display', 'block');
+
+            $('#ok-btn').click(function() {
+                $('#my-modal').css('display', 'none');
+                $('#modalCloseButton').css('display', 'none');
+
                 $.ajax({
                     type:'post',
                     url: '{{route('appealOpeningChange')}}',
@@ -165,7 +225,8 @@
                         console.log('basarisiz');
                     }
                 })
-            });
+
+            })
 
             $('#fileX').attr('hidden', true)
             $('#fileY').attr('hidden', true)
@@ -182,6 +243,7 @@
             $('#fileQUploadButton').attr('disabled', true)
             $('#fileFResetButton').attr('disabled', true)
             $('#fileFUploadButton').attr('disabled', true)
+            $('#openAppealModalButton').attr('disabled', true)
 
             @if(isset($data))
                 @if(isset($data->files['fileX']))
@@ -243,7 +305,7 @@
 
                 $.ajax({
                     type:'get',
-                    url: '{{route('doubleMajorAppealDeleteFile', [$data->appealUUID, 'fileX'])}}',
+                    url: '{{route('appealDeleteFile', [$data->appealUUID, 'fileX'])}}',
                     dataType: 'json',
                     success:function(res){
                         console.log(res);
@@ -270,7 +332,7 @@
                 formData.append('appealUUID', '{{$data->appealUUID}}');
                 $.ajax({
                     type:'POST',
-                    url: '{{route('doubleMajorAppealUploadFile')}}',
+                    url: '{{route('appealUploadFile')}}',
                     data: formData,
                     cache:false,
                     contentType: false,
@@ -330,7 +392,7 @@
 
                 $.ajax({
                     type:'get',
-                    url: '{{route('doubleMajorAppealDeleteFile', [$data->appealUUID, 'fileY'])}}',
+                    url: '{{route('appealDeleteFile', [$data->appealUUID, 'fileY'])}}',
                     dataType: 'json',
                     success:function(res){
                         console.log(res);
@@ -356,7 +418,7 @@
                 formData.append('appealUUID', '{{$data->appealUUID}}');
                 $.ajax({
                     type:'POST',
-                    url: '{{route('doubleMajorAppealUploadFile')}}',
+                    url: '{{route('appealUploadFile')}}',
                     data: formData,
                     cache:false,
                     contentType: false,
@@ -414,7 +476,7 @@
 
                 $.ajax({
                     type:'get',
-                    url: '{{route('doubleMajorAppealDeleteFile', [$data->appealUUID, 'fileZ'])}}',
+                    url: '{{route('appealDeleteFile', [$data->appealUUID, 'fileZ'])}}',
                     dataType: 'json',
                     success:function(res){
                         console.log(res);
@@ -441,7 +503,7 @@
                 formData.append('appealUUID', '{{$data->appealUUID}}');
                 $.ajax({
                     type:'POST',
-                    url: '{{route('doubleMajorAppealUploadFile')}}',
+                    url: '{{route('appealUploadFile')}}',
                     data: formData,
                     cache:false,
                     contentType: false,
@@ -499,7 +561,7 @@
 
                 $.ajax({
                     type:'get',
-                    url: '{{route('doubleMajorAppealDeleteFile', [$data->appealUUID, 'fileQ'])}}',
+                    url: '{{route('appealDeleteFile', [$data->appealUUID, 'fileQ'])}}',
                     dataType: 'json',
                     success:function(res){
                         console.log(res);
@@ -524,7 +586,7 @@
                 formData.append('appealUUID', '{{$data->appealUUID}}');
                 $.ajax({
                     type:'POST',
-                    url: '{{route('doubleMajorAppealUploadFile')}}',
+                    url: '{{route('appealUploadFile')}}',
                     data: formData,
                     cache:false,
                     contentType: false,
@@ -581,7 +643,7 @@
 
                 $.ajax({
                     type:'get',
-                    url: '{{route('doubleMajorAppealDeleteFile', [$data->appealUUID, 'fileF'])}}',
+                    url: '{{route('appealDeleteFile', [$data->appealUUID, 'fileF'])}}',
                     dataType: 'json',
                     success:function(res){
                         console.log(res);
@@ -608,7 +670,7 @@
                 formData.append('appealUUID', '{{$data->appealUUID}}');
                 $.ajax({
                     type:'POST',
-                    url: '{{route('doubleMajorAppealUploadFile')}}',
+                    url: '{{route('appealUploadFile')}}',
                     data: formData,
                     cache:false,
                     contentType: false,
@@ -640,6 +702,11 @@
 
             })
             //ENDOF fileQ
+
+            $('#trustCheck').on('change', () => {
+                if($("#trustCheck").is(':checked')) $('#openAppealModalButton').attr('disabled', false);  // checked
+                else $('#openAppealModalButton').attr('disabled', true);
+            })
         });
     </script>
 @endsection
