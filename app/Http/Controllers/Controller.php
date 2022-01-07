@@ -27,8 +27,37 @@ class Controller extends BaseController
         $this->storage = $storage->getStorageClient();
     }
 
+    public function index(){
+        $this->currentUserId = Session::get('firebaseUserId');
+
+
+        $userData = $this->database->collection('users')
+            ->document($this->currentUserId)
+            ->snapshot();
+
+        if($userData['type']){
+            $appeals = $this->database->collection('adminAppeals')
+                ->orderBy('createdAt', 'desc')
+                ->documents()
+                ->rows();
+
+        }
+        else{
+            $appeals = $this->database->collection('users')
+                ->document($this->currentUserId)
+                ->collection('appeals')
+                ->orderBy('createdAt', 'desc')
+                ->documents()
+                ->rows();
+
+        }
+
+        return view('dashboard', compact('appeals', 'userData'));
+    }
+
     public function changeAppealOpening(Request $request){
         $this->currentUserId = Session::get('firebaseUserId');
+
         $this->database->collection('users')
             ->document($this->currentUserId)
             ->collection('appeals')
@@ -163,6 +192,124 @@ class Controller extends BaseController
             ], ['merge' => true]);
 
         return redirect()->route('dashboard');
+    }
+
+    public function showAppeal($appealUUID){
+
+        $this->currentUserId = Session::get('firebaseUserId');
+
+        $currentUserData = $this->database->collection('users')
+            ->document($this->currentUserId)
+            ->snapshot();
+
+        if($currentUserData['type'] != 1) return redirect()->route('dashboard');
+
+        $adminAppeal = $this->database->collection('adminAppeals')
+            ->document($appealUUID)
+            ->snapshot();
+
+        $userId = $adminAppeal['userUUID'];
+
+        $userData = $this->database->collection('users')
+            ->document($userId)
+            ->snapshot();
+
+
+        $expiresAt = new \DateTime('tomorrow');
+        $profilePhotoURL = app('firebase.storage')->getBucket()->object('images/userProfilePicture/'.$userData['profilePhoto'])->signedUrl($expiresAt);
+
+
+        /*$userFaculty = $this->database->collection('faculties')
+            ->document($userData['faculty'])
+            ->snapshot()
+            ->data();
+
+        $userDepartmant = $this->database->collection('faculties')
+            ->document($userData['faculty'])
+            ->collection('departmans')
+            ->document($userData['departmant'])
+            ->snapshot()
+            ->data();*/
+
+        $appeal = $this->database->collection('users')
+            ->document($userId)
+            ->collection('appeals')
+            ->document($appealUUID)
+            ->snapshot();
+
+        $downloadURLs = [];
+
+        $expiresAt = new \DateTime('tomorrow');
+        if(isset($appeal['files']['fileX'])) {
+            $fileExt = explode('.', $appeal['files']['fileX'])[1];
+
+            if ($fileExt == 'png' || $fileExt == 'jpg' || $fileExt == 'jpeg') $filePath = "images";
+            else if ($fileExt == 'pdf') $filePath = "pdf";
+            else $filePath = "documents";
+            $downloadURLs['fileXDownloadURL'] = app('firebase.storage')->getBucket()->object($filePath.'/'.$appealUUID.'/' .$appeal['files']['fileX'])->signedUrl($expiresAt);
+        }
+        if(isset($appeal['files']['fileY'])) {
+            $fileExt = explode('.', $appeal['files']['fileY'])[1];
+
+            if ($fileExt == 'png' || $fileExt == 'jpg' || $fileExt == 'jpeg') $filePath = "images";
+            else if ($fileExt == 'pdf') $filePath = "pdf";
+            else $filePath = "documents";
+
+            $downloadURLs['fileYDownloadURL'] = app('firebase.storage')->getBucket()->object($filePath.'/'.$appealUUID.'/' .$appeal['files']['fileY'])->signedUrl($expiresAt);
+        }
+        if(isset($appeal['files']['fileZ'])) {
+            $fileExt = explode('.', $appeal['files']['fileZ'])[1];
+
+            if ($fileExt == 'png' || $fileExt == 'jpg' || $fileExt == 'jpeg') $filePath = "images";
+            else if ($fileExt == 'pdf') $filePath = "pdf";
+            else $filePath = "documents";
+
+            $downloadURLs['fileZDownloadURL'] = app('firebase.storage')->getBucket()->object($filePath.'/'.$appealUUID.'/' .$appeal['files']['fileZ'])->signedUrl($expiresAt);
+        }
+        if(isset($appeal['files']['fileQ'])) {
+            $fileExt = explode('.', $appeal['files']['fileQ'])[1];
+
+            if ($fileExt == 'png' || $fileExt == 'jpg' || $fileExt == 'jpeg') $filePath = "images";
+            else if ($fileExt == 'pdf') $filePath = "pdf";
+            else $filePath = "documents";
+
+            $downloadURLs['fileQDownloadURL'] = app('firebase.storage')->getBucket()->object($filePath.'/'.$appealUUID.'/' .$appeal['files']['fileQ'])->signedUrl($expiresAt);
+        }
+        if(isset($appeal['files']['fileF'])) {
+            $fileExt = explode('.', $appeal['files']['fileF'])[1];
+
+            if ($fileExt == 'png' || $fileExt == 'jpg' || $fileExt == 'jpeg') $filePath = "images";
+            else if ($fileExt == 'pdf') $filePath = "pdf";
+            else $filePath = "documents";
+
+            $downloadURLs['fileFDownloadURL'] = app('firebase.storage')->getBucket()->object($filePath.'/'.$appealUUID.'/' .$appeal['files']['fileF'])->signedUrl($expiresAt);
+        }
+
+        return view('showAppeal', compact('appeal', 'userData', 'profilePhotoURL', 'downloadURLs', 'userId'));
+    }
+
+    public function answerAppeal(Request $request){
+        $this->database->collection('users')
+            ->document(request()->userId)
+            ->collection('appeals')
+            ->document($request->appealUUID)
+            ->set([
+                'isStart' => 1,
+                'result' => [
+                    'status' => (int)$request->type
+                ]
+            ],['merge' => true]);
+
+        $this->database->collection('adminAppeals')
+            ->document($request->appealUUID)
+            ->set([
+                'isStart' => 1,
+                'result' => [
+                    'status' => (int)$request->type
+                ]
+            ],['merge' => true]);
+
+        return json_encode(['msg' => 'basarili']);
     }
 
 }

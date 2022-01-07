@@ -16,7 +16,8 @@
             </a>
         </div>
         <div class="flex flex-col justify-center items-center">
-            <form class="w-2/3 m-0 p-4">
+            <form class="w-2/3 m-0 p-4" method="post" action="{{route('signUp')}}">
+                @csrf
                 <div class="mb-4">
                     <label class="block text-grey-darker text-sm mb-1" for="studentNumber">Öğrenci No</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
@@ -70,12 +71,6 @@
                         <option>4</option>
                     </select>
                 </div>
-
-                <div class="mb-4">
-                    <label class="block text-grey-darker text-sm mb-1" for="date">Doğum Tarihi</label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none"
-                           id="date" name="date" type="datetime-local" placeholder="Doğum Tarihi">
-                </div>
                 <div class="mb-4">
                     <label class="block text-grey-darker text-sm mb-1" for="university">Üniversite</label>
                     <select id="university" name="university" class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none">
@@ -88,14 +83,13 @@
                 <div class="mb-4">
                     <label class="block text-grey-darker text-sm mb-1" for="faculty">Fakülte</label>
                     <select id="faculty" name="faculty" class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker outline-none">
-                        <option>1</option>
                         <option>2</option>
                         <option>3</option>
                         <option>4</option>
                     </select>
                 </div>
                 <button class="w-full bg-kou-normal hover:bg-kou-dark text-white py-2 px-4 rounded-lg transition"
-                        type="button">
+                        type="submit">
                     Üye ol
                 </button>
             </form>

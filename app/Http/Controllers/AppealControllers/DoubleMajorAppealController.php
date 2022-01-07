@@ -51,17 +51,27 @@ class DoubleMajorAppealController extends Controller
                     'isStart' => 2,
                     'appealType' => 0,
                     'firstOpening' => 1,
+                    'percent' => 0,
                     'files' => [],
-                    'result' => []
+                    'result' => [
+                        'description' => null,
+                        'status' => 2
+                    ]
                 ], ['merge' => true]);
 
             $docRef = $this->database->collection('adminAppeals')
                 ->document($newAppealUUID)
                 ->set([
                     'appealUUID' => $newAppealUUID,
+                    'userUUID' => $this->currentUserId,
                     'createdAt' => date_timestamp_get(date_create()),
                     'isStart' => 2,
                     'appealType' => 0,
+                    'percent' => 0,
+                    'result' => [
+                        'description' => null,
+                        'status' => 2
+                    ],
                 ], ['merge' => true]);
 
             $data = (object)[

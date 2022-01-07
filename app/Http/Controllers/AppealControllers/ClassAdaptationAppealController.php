@@ -50,8 +50,12 @@ class ClassAdaptationAppealController extends Controller
                     'isStart' => 2,
                     'appealType' => 4,
                     'firstOpening' => 1,
+                    'percent' => 0,
                     'files' => [],
-                    'result' => []
+                    'result' => [
+                        'description' => null,
+                        'status' => 2
+                    ]
                 ], ['merge' => true]);
 
             $data = (object)[
@@ -63,9 +67,15 @@ class ClassAdaptationAppealController extends Controller
                 ->document($newAppealUUID)
                 ->set([
                     'appealUUID' => $newAppealUUID,
+                    'userUUID' => $this->currentUserId,
                     'createdAt' => date_timestamp_get(date_create()),
                     'isStart' => 2,
                     'appealType' => 4,
+                    'result' => [
+                        'description' => null,
+                        'status' => 2
+                    ],
+                    'percent' => 0
                 ], ['merge' => true]);
 
 

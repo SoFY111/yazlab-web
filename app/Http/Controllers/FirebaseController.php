@@ -8,14 +8,18 @@ use Kreait\Firebase\Factory;
 use Kreait\Firebase\Auth;
 use Firebase\Auth\Token\Exception\InvalidToken;
 use Kreait\Firebase\Exception\Auth\RevokedIdToken;
+use Kreait\Firebase\Firestore;
 
 
 class FirebaseController extends Controller
 {
-    protected $auth, $database;
+    protected $auth, $database, $firestoreDatabase;
 
-    public function __construct()
+    public function __construct(Firestore $firestore)
     {
+
+        $this->firestoreDatabase = $firestore->database();
+
         $factory = (new Factory)
             ->withServiceAccount(base_path().'\firebaseAdminCred.json')
             ->withDatabaseUri('https://yazlab-proje-687f5.appspot.com/');
@@ -26,21 +30,43 @@ class FirebaseController extends Controller
         $this->database = $factory->createDatabase();
     }
 
-    public function signUp()
+    public function signUpGet(){
+        return view('register');
+    }
+
+    public function signUpPost(Request $request)
     {
-        $email = "angelicdemon@gmail.com";
-        $pass = "anya123";
+        $emaill = $request->email;
+        $pass = $request->password;
 
         try {
-            $newUser = $this->auth->createUserWithEmailAndPassword($email, $pass);
-            dd($newUser);
+            $newUser = $this->auth->createUserWithEmailAndPassword($emaill, $pass);
+
+            $this->firestoreDatabase->collection('users')
+                ->document($newUser->uid)
+                ->set([
+                    'studentNumber' => $request->studentNumber,
+                    'name' => $request->nameSurname,
+                    'phoneNumber' => [
+                        'countryCode' => 'TR',
+                        'phoneInputValue' => $request->phone
+                    ],
+                    'countryIdentifier' => $request->identifierNumber,
+                    'adres' => $request->adress,
+                    'ogrSinif' => $request->class,
+                    'type' => 0,
+                    'email' => $request->email,
+                ],['merge' => true]);
+
+            return view('login');
+
         } catch (\Throwable $e) {
             switch ($e->getMessage()) {
                 case 'The email address is already in use by another account.':
-                    dd("Email sudah digunakan.");
+                    dd("E-mail zaten kayıtlı.");
                     break;
                 case 'A password must be a string with at least 6 characters.':
-                    dd("Kata sandi minimal 6 karakter.");
+                    dd("Şifre en az 6 karakter olmalı..");
                     break;
                 default:
                     dd($e->getMessage());
@@ -62,7 +88,6 @@ class FirebaseController extends Controller
 
         try {
             $signInResult = $this->auth->signInWithEmailAndPassword($email, $pass);
-            dump($signInResult->data());
 
             Session::put('firebaseUserId', $signInResult->firebaseUserId());
             Session::put('idToken', $signInResult->idToken());

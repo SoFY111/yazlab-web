@@ -48,8 +48,12 @@ class VerticalAppealController extends Controller
                     'isStart' => 2,
                     'appealType' => 1,
                     'firstOpening' => 1,
+                    'percent' => 0,
                     'files' => [],
-                    'result' => []
+                    'result' => [
+                        'description' => null,
+                        'status' => 2
+                    ]
                 ], ['merge' => true]);
 
             $data = (object)[
@@ -61,10 +65,17 @@ class VerticalAppealController extends Controller
                 ->document($newAppealUUID)
                 ->set([
                     'appealUUID' => $newAppealUUID,
+                    'userUUID' => $this->currentUserId,
                     'createdAt' => date_timestamp_get(date_create()),
                     'isStart' => 2,
                     'appealType' => 1,
-            ], ['merge' => true]);
+                    'result' => [
+                        'description' => null,
+                        'status' => 2
+                    ],
+                    'percent' => 0
+
+                ], ['merge' => true]);
 
 
             return view('appealScreens.verticalAppeal', compact('data'));

@@ -38,10 +38,11 @@ class ProfileData extends Component
             $currentUserId = Session::get('firebaseUserId');
             $docRef = $this->database->collection('users')->document($currentUserId);
             $snapshot = $docRef->snapshot();
+
             if ($snapshot->exists()) {
                 $expiresAt = new \DateTime('tomorrow');
                 $this->userName = $snapshot->data()['name'];
-                $this->profilePhoto = app('firebase.storage')->getBucket()->object('images/userProfilePicture/'.$snapshot->data()['profilePhoto'])->signedUrl($expiresAt);
+                if (isset($snapshot->profilePhoto))                $this->profilePhoto = app('firebase.storage')->getBucket()->object('images/userProfilePicture/'.$snapshot->data()['profilePhoto'])->signedUrl($expiresAt);
             } else {
                 printf('Veri Tabanı Hatası..');
             }

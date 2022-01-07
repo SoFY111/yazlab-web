@@ -18,9 +18,8 @@ Route::group(['middleware' => 'isLogin'], function (){
 
     Route::post('giris-yap', [FirebaseController::class, 'signIn'])->name('loginPost');
 
-    Route::get('kayit-ol', function (){
-        return view('register');
-    })->name('register');
+    Route::get('kayit-ol', [FirebaseController::class, 'signUpGet'])->name('register');
+    Route::post('kayit-ol', [FirebaseController::class, 'signUpPost'])->name('signUp');
 });
 
 Route::group(['middleware' => 'isLogged'], function (){
@@ -28,9 +27,7 @@ Route::group(['middleware' => 'isLogged'], function (){
     Route::get('/user-check', [FirebaseController::class, 'userCheck'])->name('userCheck');
     Route::get('/cikis-yap', [FirebaseController::class, 'signOut'])->name('logOut');
 
-    Route::get('/', function () {
-        return view('ornk');
-    })->name('dashboard');
+    Route::get('/', [Controller::class, 'index'])->name('dashboard');
 
     Route::get('cap-basvuru', [DoubleMajorAppealController::class, 'index'])->name('doubleMajorAppeal');
     Route::get('dikey-gecis-basvuru', [VerticalAppealController::class, 'index'])->name('verticalAppeal');
@@ -38,6 +35,9 @@ Route::group(['middleware' => 'isLogged'], function (){
     Route::get('yaz-okulu-basvuru', [SummerSchoolAppealController::class, 'index'])->name('summerSchoolAppeal');
     Route::get('ders-intibak-basvuru', [ClassAdaptationAppealController::class, 'index'])->name('classAdaptation');
 
+    Route::get('basvuru-goruntule/{appealUUID}', [Controller::class, 'showAppeal'])->name('showAppeal');
+
+    Route::post('answer-appeal', [Controller::class, 'answerAppeal'])->name('answerAppeal');
 
     Route::get('cap-delete-file/{appealUUID}/{fileType}', [Controller::class, 'deleteFile'])->name('appealDeleteFile');
     Route::post('upload-file', [Controller::class, 'uploadFile'])->name('appealUploadFile');
