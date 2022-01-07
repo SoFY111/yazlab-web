@@ -216,7 +216,10 @@ class Controller extends BaseController
 
 
         $expiresAt = new \DateTime('tomorrow');
-        $profilePhotoURL = app('firebase.storage')->getBucket()->object('images/userProfilePicture/'.$userData['profilePhoto'])->signedUrl($expiresAt);
+        $profilePhotoURL = null;
+        if(isset($userData['profilePhoto'])){
+            $profilePhotoURL = app('firebase.storage')->getBucket()->object('images/userProfilePicture/'.$userData['profilePhoto'])->signedUrl($expiresAt);
+        }
 
 
         /*$userFaculty = $this->database->collection('faculties')

@@ -5,7 +5,11 @@
     <div class="flex flex-col justify-center items-center">
         <label class="font-medium py-4 border-b border-gray-300 w-full text-center " style="font-size: 22px">Öğrenci Bilgileri</label>
         <div class="flex flex-row mt-4">
-            <img src="{{$profilePhotoURL}}" style="height: 125px !important; width: 125px !important;" class="rounded-full shadow-lg " alt="{{$userData['name']}}"/>
+            @if(isset($profilePhotoURL)) <img src="{{$profilePhotoURL}}" style="height: 125px !important; width: 125px !important;" class="rounded-full shadow-lg " alt="{{$userData['name']}}"/>
+            @else
+                <div style="height: 125px !important; width: 125px !important;" class="rounded-full shadow-lg "></div>
+            @endif
+
             <div class="flex flex-col ml-2 ">
                 <label>{{$userData['name']}}</label>
                 <label>{{$userData['studentNumber']}}</label>
