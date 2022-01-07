@@ -15,18 +15,18 @@ class FirebaseController extends Controller
 {
     protected $auth, $database, $firestoreDatabase;
 
-    public function __construct(Firestore $firestore)
+    public function __construct()
     {
 
-        $this->firestoreDatabase = $firestore->database();
+        //$this->firestoreDatabase = $firestore->database();
 
-        $factory = (new Factory)
+        /*$factory = (new Factory)
             ->withServiceAccount(base_path().'\firebaseAdminCred.json')
-            ->withDatabaseUri('https://yazlab-proje-687f5.appspot.com/');
+            ->withDatabaseUri('https://yazlab-proje-687f5.appspot.com/');*/
             //->withServiceAccount(__DIR__.'\configFirebase.json')
             //->withDatabaseUri('https://YOUR-FIREBASE-PROJECT.firebaseio.com/');
 
-        $this->auth = $factory->createAuth();
+        //$this->auth = $factory->createAuth();
     }
 
     public function signUpGet(){

@@ -17,8 +17,8 @@ class VerticalAppealController extends Controller
     public function __construct(Firestore $firestore, Storage $storage)
     {
         if (!Session::has('firebaseUserId') && !Session::has('idToken')) redirect()->route('login');
-        $this->database = $firestore->database();
-        $this->storage = $storage->getStorageClient();
+        //$this->database = $firestore->database();
+        //$this->storage = $storage->getStorageClient();
     }
 
     /**

@@ -129,7 +129,7 @@
                 $.ajax({
                     type:'post',
                     url: '{{route('answerAppeal')}}',
-                    data: {appealUUID: "{{$appeal['appealUUID']}}", type: 0, userId: "{{$userId}}"},
+                    data: {appealUUID: "{{$appeal['appealUUID']}}", type: 1, userId: "{{$userId}}"},
                     dataType: 'json',
                     success:function(res){
                         document.location.href="/"
