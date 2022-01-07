@@ -27,7 +27,6 @@ class FirebaseController extends Controller
             //->withDatabaseUri('https://YOUR-FIREBASE-PROJECT.firebaseio.com/');
 
         $this->auth = $factory->createAuth();
-        $this->database = $factory->createDatabase();
     }
 
     public function signUpGet(){
@@ -172,81 +171,6 @@ class FirebaseController extends Controller
         //     }
         // }
         // return $response;
-    }
-
-    public function read()
-    {
-        $ref = $this->database->getReference('hewan/herbivora/domba')->getSnapshot();
-        dump($ref);
-        $ref = $this->database->getReference('hewan/herbivora')->getValue();
-        dump($ref);
-        $ref = $this->database->getReference('hewan/karnivora')->getValue();
-        dump($ref);
-        $ref = $this->database->getReference('hewan/omnivora')->getSnapshot()->exists();
-        dump($ref);
-    }
-
-    public function update()
-    {
-        // before
-        $ref = $this->database->getReference('tumbuhan/dikotil')->getValue();
-        dump($ref);
-
-        // update data
-        $ref = $this->database->getReference('tumbuhan')
-            ->update(["dikotil" => "mangga"]);
-
-        // after
-        $ref = $this->database->getReference('tumbuhan/dikotil')->getValue();
-        dump($ref);
-    }
-
-    public function set()
-    {
-        // before
-        $ref = $this->database->getReference('hewan')->getValue();
-        dump($ref);
-
-        // set data
-        $ref = $this->database->getReference('hewan/karnivora')
-            ->set([
-                "harimau" => [
-                    "benggala" => "galak",
-                    "sumatera" => "jinak"
-                ]
-            ]);
-
-        // after
-        $ref = $this->database->getReference('hewan')->getValue();
-        dump($ref);
-    }
-
-    public function delete()
-    {
-        // before
-        $ref = $this->database->getReference('hewan/karnivora/harimau')->getValue();
-        dump($ref);
-
-        /**
-         * 1. remove()
-         * 2. set(null)
-         * 3. update(["key" => null])
-         */
-
-        // remove()
-        $ref = $this->database->getReference('hewan/karnivora/harimau/benggala')->remove();
-
-        // set(null)
-        $ref = $this->database->getReference('hewan/karnivora/harimau/benggala')
-            ->set(null);
-
-        // update(["key" => null])
-        $ref = $this->database->getReference('hewan/karnivora/harimau')
-            ->update(["benggala" => null]);
-
-        // after
-        $ref = $this->database->getReference('hewan/karnivora/harimau')->getValue();
-        dump($ref);
     }
 
 }
